@@ -6,19 +6,28 @@ package com.daus.Model;
  * 
  */
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Roll") // Unnecessary line if same name
 public class Roll {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int numOfDice;
-	private int valOfDice;
+	private int diceToRoll;
+	private int valueOfDice;
+	
+	@ManyToMany(mappedBy = "rolls")
+	private Set<Player> players = new HashSet<>();
 	
 	public Roll() {}
 	
@@ -27,10 +36,10 @@ public class Roll {
 	 * @param id
 	 * @param dice
 	 */
-	public Roll(Long id, int numOfDice) {
+	public Roll(Long id, int diceToRoll) {
 		super();
 		this.id = id;
-		this.numOfDice = numOfDice;
+		this.diceToRoll = diceToRoll;
 	}
 
 	public Long getId() {
@@ -41,28 +50,29 @@ public class Roll {
 		this.id = id;
 	}
 
-	public int getNumOfDice() {
-		return numOfDice;
+	public int getDiceToRoll() {
+		return diceToRoll;
 	}
 
-	public void setNumOfDice(int numOfDice) {
-		this.numOfDice = numOfDice;
-	}
-	
-	public int getValOfDice() {
-		return valOfDice;
+	public void setDiceToRoll(int diceToRoll) {
+		this.diceToRoll = diceToRoll;
 	}
 
-	public void setValOfDice(int valOfDice) {
-		this.valOfDice = valOfDice;
+	public int getValueOfDice() {
+		return valueOfDice;
+	}
+
+	public void setValueOfDice(int valueOfDice) {
+		this.valueOfDice = valueOfDice;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + diceToRoll;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + numOfDice;
+		result = prime * result + valueOfDice;
 		return result;
 	}
 
@@ -75,19 +85,21 @@ public class Roll {
 		if (getClass() != obj.getClass())
 			return false;
 		Roll other = (Roll) obj;
+		if (diceToRoll != other.diceToRoll)
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (numOfDice != other.numOfDice)
+		if (valueOfDice != other.valueOfDice)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Roll [id=" + id + ", numOfDice=" + numOfDice + "]";
+		return "Roll [id=" + id + ", diceToRoll=" + diceToRoll + ", valueOfDice=" + valueOfDice + "]";
 	}
 	
 }

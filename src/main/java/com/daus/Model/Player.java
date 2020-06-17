@@ -7,13 +7,21 @@ package com.daus.Model;
  */
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Player") // Unnecessary line if same name
 public class Player {
 
 	@Id
@@ -21,6 +29,14 @@ public class Player {
 	protected Long id;
 	protected String name;
 	protected Date dateReg;
+	
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(
+			name = "Game",
+			joinColumns = { @JoinColumn(name = "player_id") },
+			inverseJoinColumns = { @JoinColumn(name = "roll_id") }
+	)
+	Set<Roll> rolls = new HashSet<>();
 			
 	public Player() {}
 	
@@ -28,27 +44,23 @@ public class Player {
 	 * 
 	 * @param id
 	 * @param name
-	 * @param dateReg
-	 * @param roll
 	 */
-	public Player(Long id, String name, Date dateReg) {
+	public Player(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.dateReg = dateReg;
+		this.dateReg = new Date();
 	}
 	
 	/**
 	 * 
 	 * @param id
-	 * @param dateReg
-	 * @param roll
 	 */
-	public Player(Long id, Date dateReg) {
+	public Player(Long id) {
 		super();
 		this.id = id;
 		this.name = "Anonymous";
-		this.dateReg = dateReg;
+		this.dateReg = new Date();
 	}
 
 	public Long getId() {

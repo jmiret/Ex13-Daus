@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 
@@ -12,21 +13,20 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "Game") // Unnecessary line if same name
 public class Game {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-	protected Long id_player;
-	protected Long id_roll;
+	protected Long player_id;
+	protected Long roll_id;
 	
 	public Game() {}
 
-	public Game(Long id, Long id_player, Long id_roll) {
+	public Game(Long id) {
 		super();
 		this.id = id;
-		this.id_player = id_player;
-		this.id_roll = id_roll;
 	}
 
 	public Long getId() {
@@ -37,20 +37,20 @@ public class Game {
 		this.id = id;
 	}
 
-	public Long getId_player() {
-		return id_player;
+	public Long getPlayer_id() {
+		return player_id;
 	}
 
-	public void setId_player(Long id_player) {
-		this.id_player = id_player;
+	public void setPlayer_id(Long player_id) {
+		this.player_id = player_id;
 	}
 
-	public Long getId_roll() {
-		return id_roll;
+	public Long getRoll_id() {
+		return roll_id;
 	}
 
-	public void setId_roll(Long id_roll) {
-		this.id_roll = id_roll;
+	public void setRoll_id(Long roll_id) {
+		this.roll_id = roll_id;
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class Game {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((id_player == null) ? 0 : id_player.hashCode());
-		result = prime * result + ((id_roll == null) ? 0 : id_roll.hashCode());
+		result = prime * result + ((player_id == null) ? 0 : player_id.hashCode());
+		result = prime * result + ((roll_id == null) ? 0 : roll_id.hashCode());
 		return result;
 	}
 
@@ -77,22 +77,22 @@ public class Game {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (id_player == null) {
-			if (other.id_player != null)
+		if (player_id == null) {
+			if (other.player_id != null)
 				return false;
-		} else if (!id_player.equals(other.id_player))
+		} else if (!player_id.equals(other.player_id))
 			return false;
-		if (id_roll == null) {
-			if (other.id_roll != null)
+		if (roll_id == null) {
+			if (other.roll_id != null)
 				return false;
-		} else if (!id_roll.equals(other.id_roll))
+		} else if (!roll_id.equals(other.roll_id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", id_player=" + id_player + ", id_roll=" + id_roll + "]";
-	}	
+		return "Game [id=" + id + ", player_id=" + player_id + ", roll_id=" + roll_id + "]";
+	}
 	
 }

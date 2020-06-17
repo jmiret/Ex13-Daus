@@ -1,9 +1,25 @@
 package com.daus.Controller;
 
+/**
+ * 
+ * @author jordi.miret
+ * 
+ */
+
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.daus.Exception.PlayerNotFoundException;
+import com.daus.Model.Player;
 import com.daus.Persistence.PlayerRepository;
 
 @RestController
@@ -18,6 +34,31 @@ public class PlayerController {
 		this.playerRepository = playerRepository;
 	}
 	
+	@PostMapping("/players")
+	Player createPlayer(@RequestBody Player player) {
+		player.setDateReg(new Date());
+		return playerRepository.save(player);
+	}
 	
+	@PutMapping("/players/{id}")
+	Player updatePlayer(@RequestBody Player p, @PathVariable Long id) {
+		return playerRepository.findById(id).map(player -> {
+			player.setName(p.getName());
+			return playerRepository.save(player);
+		}).orElseThrow(() -> {
+			return new PlayerNotFoundException(id);		
+		});
+	}
+	
+	@PostMapping("/players/{id}")
+	Player rollDice(@RequestBody Player p, @PathVariable Long id) {
+		p.setDateReg(new Date());
+		return playerRepository.save(p);
+	}
+	
+	@GetMapping("/players")
+	List<Player> readAllPlayers() {
+		return playerRepository.findAll();
+	}
 	
 }
