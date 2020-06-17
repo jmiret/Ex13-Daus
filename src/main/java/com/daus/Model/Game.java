@@ -19,8 +19,10 @@ public class Game {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
+	protected Long gameNumber;
 	protected Long player_id;
 	protected Long roll_id;
+	protected boolean isWinner;
 	
 	public Game() {}
 
@@ -35,6 +37,14 @@ public class Game {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getGameNumber() {
+		return gameNumber;
+	}
+
+	public void setGameNumber(Long gameNumber) {
+		this.gameNumber = gameNumber;
 	}
 
 	public Long getPlayer_id() {
@@ -52,11 +62,20 @@ public class Game {
 	public void setRoll_id(Long roll_id) {
 		this.roll_id = roll_id;
 	}
+	
+	public boolean isWinner() {
+		return isWinner;
+	}
+
+	public void setWinner(boolean isWinner) {
+		this.isWinner = isWinner;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((gameNumber == null) ? 0 : gameNumber.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((player_id == null) ? 0 : player_id.hashCode());
 		result = prime * result + ((roll_id == null) ? 0 : roll_id.hashCode());
@@ -72,6 +91,11 @@ public class Game {
 		if (getClass() != obj.getClass())
 			return false;
 		Game other = (Game) obj;
+		if (gameNumber == null) {
+			if (other.gameNumber != null)
+				return false;
+		} else if (!gameNumber.equals(other.gameNumber))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -92,7 +116,8 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", player_id=" + player_id + ", roll_id=" + roll_id + "]";
+		return "Game [id=" + id + ", gameNumber=" + gameNumber + ", player_id=" + player_id + ", roll_id=" + roll_id
+				+ "]";
 	}
 	
 }

@@ -49,13 +49,7 @@ public class PlayerController {
 			return new PlayerNotFoundException(id);		
 		});
 	}
-	
-	@PostMapping("/players/{id}")
-	Player rollDice(@RequestBody Player p, @PathVariable Long id) {
-		p.setDateReg(new Date());
-		return playerRepository.save(p);
-	}
-	
+		
 	@GetMapping("/players")
 	List<Player> readAllPlayers() {
 		return playerRepository.findAll();

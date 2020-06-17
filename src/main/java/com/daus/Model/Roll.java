@@ -23,8 +23,9 @@ public class Roll {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int diceToRoll;
-	private int valueOfDice;
+	private int rollNumber;
+	private int diceNumber;
+	private int diceValue;
 	
 	@ManyToMany(mappedBy = "rolls")
 	private Set<Player> players = new HashSet<>();
@@ -36,10 +37,9 @@ public class Roll {
 	 * @param id
 	 * @param dice
 	 */
-	public Roll(Long id, int diceToRoll) {
-		super();
-		this.id = id;
-		this.diceToRoll = diceToRoll;
+	public Roll(int rollNumber) {
+		super();		
+		this.rollNumber = rollNumber;
 	}
 
 	public Long getId() {
@@ -49,30 +49,49 @@ public class Roll {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public int getDiceToRoll() {
-		return diceToRoll;
+	
+	public int getRollNumber() {
+		return rollNumber;
 	}
 
-	public void setDiceToRoll(int diceToRoll) {
-		this.diceToRoll = diceToRoll;
+	public void setRollNumber(int rollNumber) {
+		this.rollNumber = rollNumber;
 	}
 
-	public int getValueOfDice() {
-		return valueOfDice;
+	public int getDiceNumber() {
+		return diceNumber;
 	}
 
-	public void setValueOfDice(int valueOfDice) {
-		this.valueOfDice = valueOfDice;
+	public void setDiceNumber(int diceNumber) {
+		this.diceNumber = diceNumber;
 	}
+
+	public int getDiceValue() {
+		return diceValue;
+	}
+
+	public void setDiceValue(int diceValue) {
+		this.diceValue = diceValue;
+	}
+
+	public Set<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(Set<Player> players) {
+		this.players = players;
+	}
+	
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + diceToRoll;
+		result = prime * result + diceNumber;
+		result = prime * result + diceValue;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + valueOfDice;
+		result = prime * result + ((players == null) ? 0 : players.hashCode());
+		result = prime * result + rollNumber;
 		return result;
 	}
 
@@ -85,21 +104,29 @@ public class Roll {
 		if (getClass() != obj.getClass())
 			return false;
 		Roll other = (Roll) obj;
-		if (diceToRoll != other.diceToRoll)
+		if (diceNumber != other.diceNumber)
+			return false;
+		if (diceValue != other.diceValue)
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (valueOfDice != other.valueOfDice)
+		if (players == null) {
+			if (other.players != null)
+				return false;
+		} else if (!players.equals(other.players))
+			return false;
+		if (rollNumber != other.rollNumber)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Roll [id=" + id + ", diceToRoll=" + diceToRoll + ", valueOfDice=" + valueOfDice + "]";
+		return "Roll [id=" + id + ", rollNumber=" + rollNumber + ", diceNumber=" + diceNumber + ", diceValue="
+				+ diceValue + ", players=" + players + "]";
 	}
 	
 }
