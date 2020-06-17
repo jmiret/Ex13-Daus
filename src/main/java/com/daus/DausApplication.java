@@ -1,5 +1,11 @@
 package com.daus;
 
+/**
+ * 
+ * @author jordi.miret
+ * 
+ */
+
 import java.util.Collections;
 
 /**
