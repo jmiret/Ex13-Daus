@@ -12,36 +12,43 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Player {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private Date dateReg;
-	
-	@OneToMany
-	private Roll roll;
-
+	protected Long id;
+	protected String name;
+	protected Date dateReg;
+			
 	public Player() {}
 	
-	public Player(Long id, String name, Date dateReg, Roll roll) {
+	/**
+	 * 
+	 * @param id
+	 * @param name
+	 * @param dateReg
+	 * @param roll
+	 */
+	public Player(Long id, String name, Date dateReg) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.dateReg = dateReg;
-		this.roll = roll;
 	}
 	
-	public Player(Long id, Date dateReg, Roll roll) {
+	/**
+	 * 
+	 * @param id
+	 * @param dateReg
+	 * @param roll
+	 */
+	public Player(Long id, Date dateReg) {
 		super();
 		this.id = id;
 		this.name = "Anonymous";
 		this.dateReg = dateReg;
-		this.roll = roll;
 	}
 
 	public Long getId() {
@@ -67,15 +74,7 @@ public class Player {
 	public void setDateReg(Date dateReg) {
 		this.dateReg = dateReg;
 	}
-
-	public Roll getRoll() {
-		return roll;
-	}
-
-	public void setRoll(Roll roll) {
-		this.roll = roll;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -115,7 +114,7 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", name=" + name + ", dateReg=" + dateReg + ", roll=" + roll + "]";
+		return "Player [id=" + id + ", name=" + name + ", dateReg=" + dateReg + "]";
 	}
 	
 }
