@@ -49,10 +49,13 @@ public class PlayerController {
 			return new PlayerNotFoundException(id);		
 		});
 	}
-		
+	
+	/*
 	@GetMapping("/players")
-	List<Player> readAllPlayers() {
-		return playerRepository.findAll();
+	List<Player> readAvgAllPlayers() {
+		//return playerRepository.findAll();
+		return playerRepository.getAvgAllPlayers();
 	}
+	*/
 	
 }

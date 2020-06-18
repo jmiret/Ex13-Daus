@@ -20,6 +20,7 @@ import com.daus.Configuration.ApplicationConfig;
 import com.daus.Domain.Dice;
 import com.daus.Exception.PlayerNotFoundException;
 import com.daus.Model.Game;
+import com.daus.Model.Player;
 import com.daus.Model.Roll;
 import com.daus.Persistence.GameRepository;
 import com.daus.Persistence.PlayerRepository;
@@ -97,6 +98,12 @@ public class GameController {
 		ids = gameRepository.getPlayerGames(id);
 		rollRepository.deletePlayerRoll(ids);
 		System.out.println(ids.toString());
+	}
+	
+	@GetMapping("/players")
+	List<Player> readAvgAllPlayers() {
+		//return playerRepository.findAll();
+		return playerRepository.getAvgAllPlayers();
 	}
 
 }
