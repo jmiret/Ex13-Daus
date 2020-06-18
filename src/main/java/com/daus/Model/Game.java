@@ -21,7 +21,7 @@ public class Game {
 	protected Long id;
 	//protected Long gameNumber;	
 	protected Long player_id;
-	//protected int roll_number;
+	protected int roll_number;
 	protected boolean isWinner;
 	
 	public Game() {}
@@ -37,7 +37,7 @@ public class Game {
 		super();
 		this.id = id;
 		this.player_id = player_id;
-		//this.roll_number = roll_number;
+		this.roll_number = roll_number;
 		this.isWinner = isWinner;
 	}
 	
@@ -66,8 +66,7 @@ public class Game {
 	public void setPlayer_id(Long player_id) {
 		this.player_id = player_id;
 	}
-
-	/*
+	
 	public int getRoll_number() {
 		return roll_number;
 	}
@@ -75,8 +74,7 @@ public class Game {
 	public void setRoll_number(int roll_number) {
 		this.roll_number = roll_number;
 	}
-	*/
-	
+		
 	public boolean isWinner() {
 		return isWinner;
 	}
@@ -92,6 +90,7 @@ public class Game {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + (isWinner ? 1231 : 1237);
 		result = prime * result + ((player_id == null) ? 0 : player_id.hashCode());
+		result = prime * result + roll_number;
 		return result;
 	}
 
@@ -116,12 +115,15 @@ public class Game {
 				return false;
 		} else if (!player_id.equals(other.player_id))
 			return false;
+		if (roll_number != other.roll_number)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", player_id=" + player_id + ", isWinner=" + isWinner + "]";
+		return "Game [id=" + id + ", player_id=" + player_id + ", roll_number=" + roll_number + ", isWinner=" + isWinner
+				+ "]";
 	}
 	
 }

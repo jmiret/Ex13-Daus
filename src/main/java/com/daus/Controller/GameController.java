@@ -49,7 +49,8 @@ public class GameController {
 			Roll roll;
 			int rollNumber;
 			
-			rollNumber = rollRepository.getLastRoll() + 1;
+			//rollNumber = rollRepository.getLastRoll() + 1;
+			rollNumber = gameRepository.getLastGame() + 1;
 			
 			for(int i = 1; i <= ApplicationConfig.numberOfDice; i++) {
 				roll = new Roll();
@@ -62,7 +63,7 @@ public class GameController {
 			
 			game = new Game();
 			game.setPlayer_id(id);
-			//game.setRoll_number(rollNumber);
+			game.setRoll_number(rollNumber);
 			
 			if(rollRepository.valueRollDice(rollNumber) == 7)
 				game.setWinner(true);
@@ -83,8 +84,11 @@ public class GameController {
 	}
 	
 	@DeleteMapping("/players/{id}/games")
-	void deletePlayerRoll(@PathVariable Long id) {
-		gameRepository.deleteById(id);
+	void deletePlayerRoll(@PathVariable int id) {
+		List<Integer> ids;
+		ids = gameRepository.getPlayerGames(id);
+		rollRepository.deletePlayerRoll(ids);
+		System.out.println(ids.toString());
 	}
 
 }

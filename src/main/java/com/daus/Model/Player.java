@@ -20,6 +20,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "Player") // Unnecessary line if same name
 public class Player {
@@ -30,7 +33,8 @@ public class Player {
 	protected String name;
 	protected Date dateReg;
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.REMOVE }) //@ManyToMany(cascade = { CascadeType.REMOVE })
+	@OnDelete(action = OnDeleteAction.CASCADE) //@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinTable(
 			name = "Game",
 			joinColumns = { @JoinColumn(name = "player_id") },
