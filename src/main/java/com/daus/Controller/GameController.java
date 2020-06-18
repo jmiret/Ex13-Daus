@@ -43,6 +43,10 @@ public class GameController {
 	@PostMapping("/players/{id}/games")
 	List<Roll> rollDice(@PathVariable Long id) {
 		
+		int numberOfDice = ApplicationConfig.numberOfDice;
+		int numberOfSides = ApplicationConfig.numberOfSides;
+		List<Integer> winnerNumbers = ApplicationConfig.winnerNumbers;
+		
 		if(!playerRepository.findById(id).equals(null)) {
 			Game game;
 			Dice dice;
@@ -52,20 +56,24 @@ public class GameController {
 			//rollNumber = rollRepository.getLastRoll() + 1;
 			rollNumber = gameRepository.getLastGame() + 1;
 			
-			for(int i = 1; i <= ApplicationConfig.numberOfDice; i++) {
+			for(int i = 1; i <= numberOfDice; i++) {
+				
 				roll = new Roll();
 				dice = new Dice();
+				
 				roll.setRollNumber(rollNumber);
 				roll.setDiceNumber(i);
-				roll.setDiceValue((dice.rollDice(ApplicationConfig.numberOfSides)));
+				roll.setDiceValue((dice.rollDice(numberOfSides)));
+				
 				rollRepository.save(roll);
+				
 			}
 			
 			game = new Game();
 			game.setPlayer_id(id);
 			game.setRoll_number(rollNumber);
-			
-			if(rollRepository.valueRollDice(rollNumber) == 7)
+		
+			if(winnerNumbers.contains((rollRepository.valueRollDice(rollNumber))))
 				game.setWinner(true);
 			
 			gameRepository.save(game);
