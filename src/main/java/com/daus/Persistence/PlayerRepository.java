@@ -20,7 +20,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 	Player findPlayerByName(@Param("player_name") String name);
 	
 	@Query(value = 	//"SELECT player.name, AVG(COUNT(game.is_winner)) AS winnerAVG " +
-					"SELECT player.id, player.name, player.date_reg, game.is_winner AS winnerAVG " +
+					"SELECT player.id, player.name, player.date_reg, COUNT(game.is_winner) AS winnerAVG " +
 					"FROM player " +
 					"INNER JOIN game " +
 					"ON player.id = game.player_id "+

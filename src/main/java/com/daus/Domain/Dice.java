@@ -16,6 +16,12 @@ public class Dice {
 	
 	public Dice() {}
 
+	/**
+	 * 
+	 * @param id
+	 * @param sides
+	 * @param value
+	 */
 	public Dice(Long id, int sides, int value) {
 		super();
 		this.id = id;

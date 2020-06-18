@@ -50,12 +50,11 @@ public class PlayerController {
 		});
 	}
 	
-	/*
-	@GetMapping("/players")
+	
+	@GetMapping("/players_1")
 	List<Player> readAvgAllPlayers() {
 		//return playerRepository.findAll();
 		return playerRepository.getAvgAllPlayers();
 	}
-	*/
-	
+		
 }

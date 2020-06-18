@@ -26,21 +26,6 @@ public class Game {
 	
 	public Game() {}
 	
-	/**
-	 * 
-	 * @param id
-	 * @param player_id
-	 * @param roll_number
-	 * @param isWinner
-	 */
-	public Game(Long id, Long player_id, int roll_number, boolean isWinner) {
-		super();
-		this.id = id;
-		this.player_id = player_id;
-		this.roll_number = roll_number;
-		this.isWinner = isWinner;
-	}
-	
 	public Long getId() {
 		return id;
 	}

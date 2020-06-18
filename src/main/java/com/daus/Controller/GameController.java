@@ -101,9 +101,9 @@ public class GameController {
 	}
 	
 	@GetMapping("/players")
-	List<Player> readAvgAllPlayers() {
+	public List<Player> readAvgAllPlayers() {
 		//return playerRepository.findAll();
-		return playerRepository.getAvgAllPlayers();
-	}
-
+		return playerRepository.getAvgAllPlayers();	
+	}	
+	
 }

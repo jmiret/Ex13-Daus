@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,38 +34,24 @@ public class Player {
 	protected String name;
 	protected Date dateReg;
 	
-	@ManyToMany(cascade = { CascadeType.REMOVE }) //@ManyToMany(cascade = { CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST}) //@ManyToMany(cascade = { CascadeType.REMOVE })
 	@OnDelete(action = OnDeleteAction.CASCADE) //@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinTable(
-			name = "Game",
+	@JoinTable(name = "Game",
 			joinColumns = { @JoinColumn(name = "player_id") },
 			inverseJoinColumns = { @JoinColumn(name = "roll_number") }
 	)
-	Set<Roll> rolls = new HashSet<>();
-			
+	protected Set<Roll> rolls = new HashSet<>();
+	
 	public Player() {}
 	
 	/**
-	 * 
-	 * @param id
+	 *
 	 * @param name
-	 */
-	public Player(Long id, String name) {
-		super();
-		this.id = id;
+	 * @param dateReg
+	 */		
+	public Player(String name, Date dateReg) {
 		this.name = name;
-		this.dateReg = new Date();
-	}
-	
-	/**
-	 * 
-	 * @param id
-	 */
-	public Player(Long id) {
-		super();
-		this.id = id;
-		this.name = "Anonymous";
-		this.dateReg = new Date();
+		this.dateReg = dateReg;
 	}
 
 	public Long getId() {

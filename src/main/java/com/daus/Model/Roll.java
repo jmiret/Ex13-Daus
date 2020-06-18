@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,19 +28,20 @@ public class Roll {
 	protected int diceNumber;
 	protected int diceValue;
 	
-	@ManyToMany(mappedBy = "rolls")
-	private Set<Player> players = new HashSet<>();
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "rolls")
+	protected Set<Player> players = new HashSet<>();
 	
 	public Roll() {}
 	
 	/**
-	 * 
-	 * @param id
-	 * @param dice
+	 * @param rollNumber
+	 * @param diceNumber
+	 * @param diceValue
 	 */
-	public Roll(int rollNumber) {
-		super();		
+	public Roll(int rollNumber, int diceNumber, int diceValue) {
 		this.rollNumber = rollNumber;
+		this.diceNumber = diceNumber;
+		this.diceValue = diceValue;
 	}
 
 	public Long getId() {
