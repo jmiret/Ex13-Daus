@@ -34,7 +34,7 @@ public class Player {
 	@JoinTable(
 			name = "Game",
 			joinColumns = { @JoinColumn(name = "player_id") },
-			inverseJoinColumns = { @JoinColumn(name = "roll_id") }
+			inverseJoinColumns = { @JoinColumn(name = "roll_number") }
 	)
 	Set<Roll> rolls = new HashSet<>();
 			

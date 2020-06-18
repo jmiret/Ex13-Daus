@@ -16,4 +16,7 @@ public interface RollRepository extends JpaRepository<Roll, Long> {
 	@Query(value = "SELECT * FROM roll WHERE roll_number = :roll_number", nativeQuery = true)
 	List<Roll> getRollbyNumber(@Param("roll_number") int rollNumber);
 	
+	@Query(value = "SELECT SUM(dice_value) FROM roll WHERE roll_number = :roll_number", nativeQuery = true)
+	int valueRollDice(@Param("roll_number") int rollNumber);
+	
 }

@@ -22,10 +22,10 @@ public class Roll {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private int rollNumber;
-	private int diceNumber;
-	private int diceValue;
+	protected Long id;
+	protected int rollNumber;
+	protected int diceNumber;
+	protected int diceValue;
 	
 	@ManyToMany(mappedBy = "rolls")
 	private Set<Player> players = new HashSet<>();

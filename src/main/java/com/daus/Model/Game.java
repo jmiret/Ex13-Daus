@@ -17,20 +17,30 @@ import javax.persistence.Table;
 public class Game {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	protected Long id;
-	protected Long gameNumber;
+	//protected Long gameNumber;	
 	protected Long player_id;
-	protected Long roll_id;
+	//protected int roll_number;
 	protected boolean isWinner;
 	
 	public Game() {}
-
-	public Game(Long id) {
+	
+	/**
+	 * 
+	 * @param id
+	 * @param player_id
+	 * @param roll_number
+	 * @param isWinner
+	 */
+	public Game(Long id, Long player_id, int roll_number, boolean isWinner) {
 		super();
 		this.id = id;
+		this.player_id = player_id;
+		//this.roll_number = roll_number;
+		this.isWinner = isWinner;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -39,6 +49,7 @@ public class Game {
 		this.id = id;
 	}
 
+	/*
 	public Long getGameNumber() {
 		return gameNumber;
 	}
@@ -46,7 +57,8 @@ public class Game {
 	public void setGameNumber(Long gameNumber) {
 		this.gameNumber = gameNumber;
 	}
-
+	*/
+	
 	public Long getPlayer_id() {
 		return player_id;
 	}
@@ -55,13 +67,15 @@ public class Game {
 		this.player_id = player_id;
 	}
 
-	public Long getRoll_id() {
-		return roll_id;
+	/*
+	public int getRoll_number() {
+		return roll_number;
 	}
 
-	public void setRoll_id(Long roll_id) {
-		this.roll_id = roll_id;
+	public void setRoll_number(int roll_number) {
+		this.roll_number = roll_number;
 	}
+	*/
 	
 	public boolean isWinner() {
 		return isWinner;
@@ -75,10 +89,9 @@ public class Game {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((gameNumber == null) ? 0 : gameNumber.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (isWinner ? 1231 : 1237);
 		result = prime * result + ((player_id == null) ? 0 : player_id.hashCode());
-		result = prime * result + ((roll_id == null) ? 0 : roll_id.hashCode());
 		return result;
 	}
 
@@ -91,33 +104,24 @@ public class Game {
 		if (getClass() != obj.getClass())
 			return false;
 		Game other = (Game) obj;
-		if (gameNumber == null) {
-			if (other.gameNumber != null)
-				return false;
-		} else if (!gameNumber.equals(other.gameNumber))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (isWinner != other.isWinner)
 			return false;
 		if (player_id == null) {
 			if (other.player_id != null)
 				return false;
 		} else if (!player_id.equals(other.player_id))
 			return false;
-		if (roll_id == null) {
-			if (other.roll_id != null)
-				return false;
-		} else if (!roll_id.equals(other.roll_id))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", gameNumber=" + gameNumber + ", player_id=" + player_id + ", roll_id=" + roll_id
-				+ "]";
+		return "Game [id=" + id + ", player_id=" + player_id + ", isWinner=" + isWinner + "]";
 	}
 	
 }

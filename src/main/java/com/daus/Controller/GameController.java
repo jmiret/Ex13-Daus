@@ -9,6 +9,8 @@ import java.util.List;
  */
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.daus.Configuration.ApplicationConfig;
 import com.daus.Domain.Dice;
 import com.daus.Exception.PlayerNotFoundException;
+import com.daus.Model.Game;
 import com.daus.Model.Roll;
 import com.daus.Persistence.GameRepository;
 import com.daus.Persistence.PlayerRepository;
@@ -41,6 +44,7 @@ public class GameController {
 	List<Roll> rollDice(@PathVariable Long id) {
 		
 		if(!playerRepository.findById(id).equals(null)) {
+			Game game;
 			Dice dice;
 			Roll roll;
 			int rollNumber;
@@ -55,13 +59,32 @@ public class GameController {
 				roll.setDiceValue((dice.rollDice(ApplicationConfig.numberOfSides)));
 				rollRepository.save(roll);
 			}
-				
+			
+			game = new Game();
+			game.setPlayer_id(id);
+			//game.setRoll_number(rollNumber);
+			
+			if(rollRepository.valueRollDice(rollNumber) == 7)
+				game.setWinner(true);
+			
+			gameRepository.save(game);
+			
 			return rollRepository.getRollbyNumber(rollNumber);
 			
 		} else {
 			throw new PlayerNotFoundException(id);
 		}
 				
+	}
+	
+	@GetMapping("/players/{id}/games")
+	List<Game> getPlayerRoll(@PathVariable Long id) {
+		return gameRepository.findAll();				
+	}
+	
+	@DeleteMapping("/players/{id}/games")
+	void deletePlayerRoll(@PathVariable Long id) {
+		gameRepository.deleteById(id);
 	}
 
 }
