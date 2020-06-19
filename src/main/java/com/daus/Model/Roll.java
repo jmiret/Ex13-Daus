@@ -7,6 +7,7 @@ package com.daus.Model;
  */
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -14,8 +15,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Roll") // Unnecessary line if same name
@@ -27,9 +31,11 @@ public class Roll {
 	protected int rollNumber;
 	protected int diceNumber;
 	protected int diceValue;
-	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "rolls")
-	protected Set<Player> players = new HashSet<>();
+		
+	@ManyToMany
+	@JoinColumn(name = "id")
+	protected List<Player> players;
+	//protected Set<Player> players = new HashSet<>();
 	
 	public Roll() {}
 	
@@ -76,14 +82,16 @@ public class Roll {
 		this.diceValue = diceValue;
 	}
 
-	public Set<Player> getPlayers() {
+	@JsonIgnore
+	//@ManyToMany(fetch = FetchType.LAZY, mappedBy = "players")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "Player")
+	public List<Player> getPlayers() {
 		return players;
 	}
 
-	public void setPlayers(Set<Player> players) {
+	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-	
 
 	@Override
 	public int hashCode() {

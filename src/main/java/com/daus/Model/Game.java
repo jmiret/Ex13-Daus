@@ -17,7 +17,8 @@ import javax.persistence.Table;
 public class Game {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
 	//protected Long gameNumber;	
 	protected Long player_id;

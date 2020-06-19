@@ -1,5 +1,6 @@
 package com.daus.Persistence;
 
+import java.sql.Wrapper;
 import java.util.List;
 
 /**
@@ -19,21 +20,16 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 	@Query("SELECT p from Player p where p.name = :player_name")
 	Player findPlayerByName(@Param("player_name") String name);
 	
-	@Query(value = 	//"SELECT player.name, AVG(COUNT(game.is_winner)) AS winnerAVG " +
-					"SELECT player.id, player.name, player.date_reg, COUNT(game.is_winner) AS winnerAVG " +
+	//@Query(value = "SELECT * FROM player", nativeQuery = true)
+	@Query(value = 	"SELECT player.id, player.name, player.date_reg, AVG(game.is_winner) AS winnerAvg " +
 					"FROM player " +
 					"INNER JOIN game " +
-					"ON player.id = game.player_id "+
-					"GROUP BY player.name " +
+					"ON player.id = game.player_id " +
+					"GROUP BY player.name" +
 					"", nativeQuery = true)
+	//Wrapper getAvgAllPlayers();
 	List<Player> getAvgAllPlayers();
-
-	/*
-	SELECT fabricante.nombre, MAX(producto.precio) AS precioMax, MIN(producto.precio) AS precioMin, AVG(producto.precio) AS precioMedio
-	FROM producto 
-	INNER JOIN fabricante ON producto.codigo_fabricante = fabricante.codigo
-	GROUP BY fabricante.nombre;
-	*/
+	
 }
 
  

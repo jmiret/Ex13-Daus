@@ -1,5 +1,5 @@
 package com.daus.Controller;
-
+import java.sql.Wrapper;
 import java.util.List;
 
 /**
@@ -25,6 +25,8 @@ import com.daus.Model.Roll;
 import com.daus.Persistence.GameRepository;
 import com.daus.Persistence.PlayerRepository;
 import com.daus.Persistence.RollRepository;
+//import com.google.gson.Gson;
+//import com.google.gson.GsonBuilder;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
@@ -40,6 +42,14 @@ public class GameController {
 		this.playerRepository = playerRepository;
 		this.rollRepository = rollRepository;
 	}
+	
+	/*
+	private String toJson(Object object) {
+
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		return gson.toJson(object);
+	}
+	*/
 	
 	@PostMapping("/players/{id}/games")
 	List<Roll> rollDice(@PathVariable Long id) {
@@ -100,10 +110,11 @@ public class GameController {
 		System.out.println(ids.toString());
 	}
 	
-	@GetMapping("/players")
+	@GetMapping("/players__")
 	public List<Player> readAvgAllPlayers() {
 		//return playerRepository.findAll();
-		return playerRepository.getAvgAllPlayers();	
+		return gameRepository.getAvgAllPlayers();	
 	}	
+	
 	
 }

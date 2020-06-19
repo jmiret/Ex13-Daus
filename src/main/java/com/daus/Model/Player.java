@@ -20,9 +20,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Player") // Unnecessary line if same name
@@ -32,26 +36,37 @@ public class Player {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 	protected String name;
+	@JsonFormat(pattern = "YYYY-MM-dd")
 	protected Date dateReg;
-	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST}) //@ManyToMany(cascade = { CascadeType.REMOVE })
+	@Transient
+	protected double winnerAvg;
+		
+	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST}) 
+	@ManyToMany(cascade = { CascadeType.REMOVE })
 	@OnDelete(action = OnDeleteAction.CASCADE) //@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinTable(name = "Game",
 			joinColumns = { @JoinColumn(name = "player_id") },
 			inverseJoinColumns = { @JoinColumn(name = "roll_number") }
 	)
-	protected Set<Roll> rolls = new HashSet<>();
+	//protected Set<Roll> rolls = new HashSet<>();
+	protected Set<Roll> rolls;
 	
 	public Player() {}
 	
 	/**
-	 *
+	 * 
+	 * @param id
 	 * @param name
 	 * @param dateReg
-	 */		
-	public Player(String name, Date dateReg) {
+	 * @param rolls
+	 */
+	public Player(Long id, String name, Date dateReg, double winnerAvg, Set<Roll> rolls) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.dateReg = dateReg;
+		this.winnerAvg = winnerAvg;
+		this.rolls = rolls;
 	}
 
 	public Long getId() {
@@ -76,6 +91,22 @@ public class Player {
 
 	public void setDateReg(Date dateReg) {
 		this.dateReg = dateReg;
+	}
+	
+	public double getWinnerAvg() {
+		return winnerAvg;
+	}
+
+	public void setWinnerAvg(double winnerAvg) {
+		this.winnerAvg = winnerAvg;
+	}
+
+	public Set<Roll> getRolls() {
+		return rolls;
+	}
+
+	public void setRolls(Set<Roll> rolls) {
+		this.rolls = rolls;
 	}
 	
 	@Override
