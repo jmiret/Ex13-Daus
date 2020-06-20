@@ -28,7 +28,7 @@ public class Dice {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long dice_id;
+	private Long id_dice;
 	private int side;	
 	private int value;
 	
@@ -38,9 +38,9 @@ public class Dice {
 	
 	public Dice() {}
 	
-	public Dice(Long dice_id, int side, int value, Roll roll) {
+	public Dice(Long id_dice, int side, int value, Roll roll) {
 		super();
-		this.dice_id = dice_id;
+		this.id_dice = id_dice;
 		this.side = side;
 		this.value = value;
 		this.roll = roll;
@@ -51,12 +51,12 @@ public class Dice {
 		return random.nextInt((sides - 1) + 1) + 1;		
 	}
 
-	public Long getDice_id() {
-		return dice_id;
+	public Long getId_dice() {
+		return id_dice;
 	}
 
-	public void setDice_id(Long dice_id) {
-		this.dice_id = dice_id;
+	public void setId_dice(Long id_dice) {
+		this.id_dice = id_dice;
 	}
 
 	public int getSide() {
@@ -87,7 +87,7 @@ public class Dice {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dice_id == null) ? 0 : dice_id.hashCode());
+		result = prime * result + ((id_dice == null) ? 0 : id_dice.hashCode());
 		result = prime * result + ((roll == null) ? 0 : roll.hashCode());
 		result = prime * result + side;
 		result = prime * result + value;
@@ -103,10 +103,10 @@ public class Dice {
 		if (getClass() != obj.getClass())
 			return false;
 		Dice other = (Dice) obj;
-		if (dice_id == null) {
-			if (other.dice_id != null)
+		if (id_dice == null) {
+			if (other.id_dice != null)
 				return false;
-		} else if (!dice_id.equals(other.dice_id))
+		} else if (!id_dice.equals(other.id_dice))
 			return false;
 		if (roll == null) {
 			if (other.roll != null)
@@ -122,7 +122,7 @@ public class Dice {
 
 	@Override
 	public String toString() {
-		return "Dice [dice_id=" + dice_id + ", side=" + side + ", value=" + value + ", roll=" + roll + "]";
+		return "Dice [id_dice=" + id_dice + ", side=" + side + ", value=" + value + ", roll=" + roll + "]";
 	}
 	
 }

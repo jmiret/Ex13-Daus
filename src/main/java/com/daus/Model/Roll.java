@@ -27,38 +27,38 @@ public class Roll {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long roll_id;
+	private Long id_roll;
 			
 	@ManyToOne(targetEntity = Game.class, fetch = FetchType.LAZY)	
 	@JoinColumn(name = "fk_game")
 	private Game game;
-	
+		
 	@OneToMany(mappedBy = "roll")
 	private List<Dice> dice;
-	
+		
 	public Roll() {}
 	
 	/**
 	 * 
-	 * @param roll_id
+	 * @param id_roll
 	 * @param game
 	 * @param dice
 	 */
-	public Roll(Long roll_id, Game game, List<Dice> dice) {
+	public Roll(Long id_roll, Game game, List<Dice> dice) {
 		super();
-		this.roll_id = roll_id;
+		this.id_roll = id_roll;
 		this.game = game;
 		this.dice = dice;
 	}
 
-	public Long getRoll_id() {
-		return roll_id;
+	public Long getId_roll() {
+		return id_roll;
 	}
 
-	public void setRoll_id(Long roll_id) {
-		this.roll_id = roll_id;
+	public void setId_roll(Long id_roll) {
+		this.id_roll = id_roll;
 	}
-	
+
 	public Game getGame() {
 		return game;
 	}
@@ -66,6 +66,7 @@ public class Roll {
 	public void setGame(Game game) {
 		this.game = game;
 	}
+	
 	
 	public List<Dice> getDice() {
 		return dice;
@@ -80,7 +81,7 @@ public class Roll {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((game == null) ? 0 : game.hashCode());
-		result = prime * result + ((roll_id == null) ? 0 : roll_id.hashCode());
+		result = prime * result + ((id_roll == null) ? 0 : id_roll.hashCode());
 		return result;
 	}
 
@@ -98,17 +99,17 @@ public class Roll {
 				return false;
 		} else if (!game.equals(other.game))
 			return false;
-		if (roll_id == null) {
-			if (other.roll_id != null)
+		if (id_roll == null) {
+			if (other.id_roll != null)
 				return false;
-		} else if (!roll_id.equals(other.roll_id))
+		} else if (!id_roll.equals(other.id_roll))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Roll [roll_id=" + roll_id + ", game=" + game + "]";
+		return "Roll [id_roll=" + id_roll + ", game=" + game + "]";
 	}
 	
 }
