@@ -35,5 +35,47 @@ public class Game {
 	private Player player;
 			
 	public Game() {}
+
+	/**
+	 * 
+	 * @param id_game
+	 * @param isWinner
+	 * @param player
+	 */
+	public Game(Long id_game, boolean isWinner, Player player) {
+		super();
+		this.id_game = id_game;
+		this.isWinner = isWinner;
+		this.player = player;
+	}
+
+	public Long getId_game() {
+		return id_game;
+	}
+
+	public void setId_game(Long id_game) {
+		this.id_game = id_game;
+	}
+
+	public boolean isWinner() {
+		return isWinner;
+	}
+
+	public void setWinner(boolean isWinner) {
+		this.isWinner = isWinner;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	@Override
+	public String toString() {
+		return "Game [id_game=" + id_game + ", isWinner=" + isWinner + ", player=" + player + "]";
+	}
 	
 }
