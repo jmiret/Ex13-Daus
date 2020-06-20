@@ -1,5 +1,7 @@
 package com.daus.Model;
 
+import java.util.List;
+
 /**
  * 
  * @author jordi.miret
@@ -9,11 +11,14 @@ package com.daus.Model;
 import java.util.Random;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,25 +32,20 @@ public class Dice {
 	private int side;	
 	private int value;
 	
-	@ManyToOne
-	@JsonIgnore
+	@ManyToOne(targetEntity = Roll.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_roll")	
 	private Roll roll;
 	
 	public Dice() {}
-
-	/**
-	 * 
-	 * @param dice_id
-	 * @param side
-	 * @param value
-	 */
-	public Dice(Long dice_id, int side, int value) {
+	
+	public Dice(Long dice_id, int side, int value, Roll roll) {
 		super();
 		this.dice_id = dice_id;
 		this.side = side;
 		this.value = value;
+		this.roll = roll;
 	}
-	
+
 	public int rollDice(int sides) {
 		Random random = new Random();
 		return random.nextInt((sides - 1) + 1) + 1;		
@@ -74,12 +74,21 @@ public class Dice {
 	public void setValue(int value) {
 		this.value = value;
 	}
+	
+	public Roll getRoll() {
+		return roll;
+	}
+
+	public void setRoll(Roll roll) {
+		this.roll = roll;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dice_id == null) ? 0 : dice_id.hashCode());
+		result = prime * result + ((roll == null) ? 0 : roll.hashCode());
 		result = prime * result + side;
 		result = prime * result + value;
 		return result;
@@ -99,6 +108,11 @@ public class Dice {
 				return false;
 		} else if (!dice_id.equals(other.dice_id))
 			return false;
+		if (roll == null) {
+			if (other.roll != null)
+				return false;
+		} else if (!roll.equals(other.roll))
+			return false;
 		if (side != other.side)
 			return false;
 		if (value != other.value)
@@ -108,7 +122,7 @@ public class Dice {
 
 	@Override
 	public String toString() {
-		return "Dice [dice_id=" + dice_id + ", side=" + side + ", value=" + value + "]";
+		return "Dice [dice_id=" + dice_id + ", side=" + side + ", value=" + value + ", roll=" + roll + "]";
 	}
 	
 }

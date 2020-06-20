@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,8 +29,11 @@ public class Roll {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long roll_id;
 			
-	@OneToMany(targetEntity = Dice.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "roll_id")
+	@ManyToOne(targetEntity = Game.class, fetch = FetchType.LAZY)	
+	@JoinColumn(name = "fk_game")
+	private Game game;
+	
+	@OneToMany(mappedBy = "roll")
 	private List<Dice> dice;
 	
 	public Roll() {}
@@ -37,11 +41,13 @@ public class Roll {
 	/**
 	 * 
 	 * @param roll_id
+	 * @param game
 	 * @param dice
 	 */
-	public Roll(Long roll_id, List<Dice> dice) {
+	public Roll(Long roll_id, Game game, List<Dice> dice) {
 		super();
 		this.roll_id = roll_id;
+		this.game = game;
 		this.dice = dice;
 	}
 
@@ -52,9 +58,15 @@ public class Roll {
 	public void setRoll_id(Long roll_id) {
 		this.roll_id = roll_id;
 	}
+	
+	public Game getGame() {
+		return game;
+	}
 
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dice")
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	
 	public List<Dice> getDice() {
 		return dice;
 	}
@@ -67,7 +79,7 @@ public class Roll {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dice == null) ? 0 : dice.hashCode());
+		result = prime * result + ((game == null) ? 0 : game.hashCode());
 		result = prime * result + ((roll_id == null) ? 0 : roll_id.hashCode());
 		return result;
 	}
@@ -81,10 +93,10 @@ public class Roll {
 		if (getClass() != obj.getClass())
 			return false;
 		Roll other = (Roll) obj;
-		if (dice == null) {
-			if (other.dice != null)
+		if (game == null) {
+			if (other.game != null)
 				return false;
-		} else if (!dice.equals(other.dice))
+		} else if (!game.equals(other.game))
 			return false;
 		if (roll_id == null) {
 			if (other.roll_id != null)
@@ -96,7 +108,7 @@ public class Roll {
 
 	@Override
 	public String toString() {
-		return "Roll [roll_id=" + roll_id + ", dice=" + dice + "]";
+		return "Roll [roll_id=" + roll_id + ", game=" + game + "]";
 	}
 	
 }

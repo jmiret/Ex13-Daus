@@ -15,8 +15,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "game") // Unnecessary line if same name
@@ -27,9 +29,10 @@ public class Game {
 	private Long game_id;
 	private boolean isWinner;
 	
-	@OneToMany(targetEntity = Roll.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "game_id")
-	private List<Roll> roll;
+	
+	@ManyToOne(targetEntity = Player.class)
+	@JoinColumn(name = "player_id")	
+	private List<Player> player;
 		
 	public Game() {}
 	
@@ -37,15 +40,15 @@ public class Game {
 	 * 
 	 * @param game_id
 	 * @param isWinner
-	 * @param roll
-	 */	
-	public Game(Long game_id, boolean isWinner, List<Roll> roll) {
+	 * @param player
+	 */
+	public Game(Long game_id, boolean isWinner, List<Player> player) {
 		super();
 		this.game_id = game_id;
 		this.isWinner = isWinner;
-		this.roll = roll;
+		this.player = player;
 	}
-
+	
 	public Long getGame_id() {
 		return game_id;
 	}
@@ -62,12 +65,12 @@ public class Game {
 		this.isWinner = isWinner;
 	}
 
-	public List<Roll> getRoll() {
-		return roll;
+	public List<Player> getPlayer() {
+		return player;
 	}
 
-	public void setRoll(List<Roll> roll) {
-		this.roll = roll;
+	public void setPlayer(List<Player> player) {
+		this.player = player;
 	}
 
 	@Override
@@ -76,7 +79,7 @@ public class Game {
 		int result = 1;
 		result = prime * result + ((game_id == null) ? 0 : game_id.hashCode());
 		result = prime * result + (isWinner ? 1231 : 1237);
-		result = prime * result + ((roll == null) ? 0 : roll.hashCode());
+		result = prime * result + ((player == null) ? 0 : player.hashCode());
 		return result;
 	}
 
@@ -96,17 +99,17 @@ public class Game {
 			return false;
 		if (isWinner != other.isWinner)
 			return false;
-		if (roll == null) {
-			if (other.roll != null)
+		if (player == null) {
+			if (other.player != null)
 				return false;
-		} else if (!roll.equals(other.roll))
+		} else if (!player.equals(other.player))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Game [game_id=" + game_id + ", isWinner=" + isWinner + ", roll=" + roll + "]";
+		return "Game [game_id=" + game_id + ", isWinner=" + isWinner + ", player=" + player + "]";
 	}
 	
 }

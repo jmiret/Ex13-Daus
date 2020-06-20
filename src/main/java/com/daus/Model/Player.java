@@ -33,10 +33,6 @@ public class Player {
 	@Transient
 	private double winnerAvg;
 		
-	@OneToMany
-	@JoinColumn(name = "player_id")
-	private List<Game> game;
-	
 	public Player() {}
 	
 	/**
@@ -45,15 +41,13 @@ public class Player {
 	 * @param name
 	 * @param dateReg
 	 * @param winnerAvg
-	 * @param game
 	 */
-	public Player(Long player_id, String name, Date dateReg, double winnerAvg, List<Game> game) {
+	public Player(Long player_id, String name, Date dateReg, double winnerAvg) {
 		super();
 		this.player_id = player_id;
 		this.name = name;
 		this.dateReg = dateReg;
 		this.winnerAvg = winnerAvg;
-		this.game = game;
 	}
 	
 	public Long getPlayer_id() {
@@ -88,20 +82,11 @@ public class Player {
 		this.winnerAvg = winnerAvg;
 	}
 
-	public List<Game> getGame() {
-		return game;
-	}
-
-	public void setGame(List<Game> game) {
-		this.game = game;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dateReg == null) ? 0 : dateReg.hashCode());
-		result = prime * result + ((game == null) ? 0 : game.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((player_id == null) ? 0 : player_id.hashCode());
 		long temp;
@@ -124,11 +109,6 @@ public class Player {
 				return false;
 		} else if (!dateReg.equals(other.dateReg))
 			return false;
-		if (game == null) {
-			if (other.game != null)
-				return false;
-		} else if (!game.equals(other.game))
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -147,7 +127,7 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [player_id=" + player_id + ", name=" + name + ", dateReg=" + dateReg + ", winnerAvg=" + winnerAvg
-				+ ", game=" + game + "]";
+				+ "]";
 	}
 	
 }
