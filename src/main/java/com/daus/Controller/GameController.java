@@ -25,6 +25,7 @@ import com.daus.Model.Roll;
 import com.daus.Persistence.GameRepository;
 import com.daus.Persistence.PlayerRepository;
 import com.daus.Persistence.RollRepository;
+import com.daus.Service.GameService;
 //import com.google.gson.Gson;
 //import com.google.gson.GsonBuilder;
 
@@ -35,12 +36,15 @@ public class GameController {
 	private final GameRepository gameRepository;
 	private final PlayerRepository playerRepository;
 	private final RollRepository rollRepository;
+	
+	private GameService gameService;
 
-	public GameController(GameRepository gameRepository, PlayerRepository playerRepository, RollRepository rollRepository) {
+	public GameController(GameRepository gameRepository, PlayerRepository playerRepository, RollRepository rollRepository, GameService gameService) {
 		super();
 		this.gameRepository = gameRepository;
 		this.playerRepository = playerRepository;
 		this.rollRepository = rollRepository;
+		this.gameService = gameService;
 	}
 	
 	/*
@@ -53,7 +57,7 @@ public class GameController {
 	
 	@PostMapping("/players/{id}/games")
 	List<Roll> rollDice(@PathVariable Long id) {
-		
+				
 		int numberOfDice = ApplicationConfig.numberOfDice;
 		int numberOfSides = ApplicationConfig.numberOfSides;
 		List<Integer> winnerNumbers = ApplicationConfig.winnerNumbers;
@@ -94,7 +98,7 @@ public class GameController {
 		} else {
 			throw new PlayerNotFoundException(id);
 		}
-				
+			
 	}
 	
 	@GetMapping("/players/{id}/games")

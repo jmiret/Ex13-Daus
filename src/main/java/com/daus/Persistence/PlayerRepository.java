@@ -2,6 +2,7 @@ package com.daus.Persistence;
 
 import java.sql.Wrapper;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -12,6 +13,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 
 import com.daus.Model.Player;
 
@@ -29,6 +31,14 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 					"", nativeQuery = true)
 	//Wrapper getAvgAllPlayers();
 	List<Player> getAvgAllPlayers();
+	
+	@Query(value = 	"SELECT player.id, player.name, player.date_reg, AVG(game.is_winner) AS winnerAvg " +
+			"FROM player " +
+			"INNER JOIN game " +
+			"ON player.id = game.player_id " +
+			"GROUP BY player.name" +
+			"", nativeQuery = true)
+	Set<Player> getAvgAllPlayers_3();
 	
 }
 

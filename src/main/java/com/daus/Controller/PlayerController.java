@@ -13,7 +13,9 @@ import java.sql.Wrapper;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;  
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -99,6 +101,12 @@ public class PlayerController {
 		});
 		
 		return results;
+	}
+	
+	@GetMapping("/players_3")
+	@ResponseBody
+	public Set<Player> readAvgAllPlayers_3() {
+		return playerRepository.getAvgAllPlayers_3();	
 	}
 	
 }
