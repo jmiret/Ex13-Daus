@@ -1,66 +1,59 @@
 package com.daus.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
  * 
  * @author jordi.miret
  *
  */
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 @Entity
-@Table(name = "Game") // Unnecessary line if same name
+@Table(name = "game") // Unnecessary line if same name
 public class Game {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected Long id;
-	//protected Long gameNumber;	
-	protected Long player_id;
-	protected int roll_number;
-	protected boolean isWinner;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long game_id;
+	private boolean isWinner;
 	
+	@OneToMany(targetEntity = Roll.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "game_id")
+	private List<Roll> roll;
+		
 	public Game() {}
 	
-	public Long getId() {
-		return id;
+	/**
+	 * 
+	 * @param game_id
+	 * @param isWinner
+	 * @param roll
+	 */	
+	public Game(Long game_id, boolean isWinner, List<Roll> roll) {
+		super();
+		this.game_id = game_id;
+		this.isWinner = isWinner;
+		this.roll = roll;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Long getGame_id() {
+		return game_id;
 	}
 
-	/*
-	public Long getGameNumber() {
-		return gameNumber;
+	public void setGame_id(Long game_id) {
+		this.game_id = game_id;
 	}
 
-	public void setGameNumber(Long gameNumber) {
-		this.gameNumber = gameNumber;
-	}
-	*/
-	
-	public Long getPlayer_id() {
-		return player_id;
-	}
-
-	public void setPlayer_id(Long player_id) {
-		this.player_id = player_id;
-	}
-	
-	public int getRoll_number() {
-		return roll_number;
-	}
-
-	public void setRoll_number(int roll_number) {
-		this.roll_number = roll_number;
-	}
-		
 	public boolean isWinner() {
 		return isWinner;
 	}
@@ -69,14 +62,21 @@ public class Game {
 		this.isWinner = isWinner;
 	}
 
+	public List<Roll> getRoll() {
+		return roll;
+	}
+
+	public void setRoll(List<Roll> roll) {
+		this.roll = roll;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((game_id == null) ? 0 : game_id.hashCode());
 		result = prime * result + (isWinner ? 1231 : 1237);
-		result = prime * result + ((player_id == null) ? 0 : player_id.hashCode());
-		result = prime * result + roll_number;
+		result = prime * result + ((roll == null) ? 0 : roll.hashCode());
 		return result;
 	}
 
@@ -89,27 +89,24 @@ public class Game {
 		if (getClass() != obj.getClass())
 			return false;
 		Game other = (Game) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (game_id == null) {
+			if (other.game_id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!game_id.equals(other.game_id))
 			return false;
 		if (isWinner != other.isWinner)
 			return false;
-		if (player_id == null) {
-			if (other.player_id != null)
+		if (roll == null) {
+			if (other.roll != null)
 				return false;
-		} else if (!player_id.equals(other.player_id))
-			return false;
-		if (roll_number != other.roll_number)
+		} else if (!roll.equals(other.roll))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Game [id=" + id + ", player_id=" + player_id + ", roll_number=" + roll_number + ", isWinner=" + isWinner
-				+ "]";
+		return "Game [game_id=" + game_id + ", isWinner=" + isWinner + ", roll=" + roll + "]";
 	}
 	
 }

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daus.Configuration.ApplicationConfig;
-import com.daus.Domain.Dice;
 import com.daus.Exception.PlayerNotFoundException;
+import com.daus.Model.Dice;
 import com.daus.Model.Game;
 import com.daus.Model.Player;
 import com.daus.Model.Roll;
@@ -76,18 +76,22 @@ public class GameController {
 				roll = new Roll();
 				dice = new Dice();
 				
+				/*
 				roll.setRollNumber(rollNumber);
 				roll.setDiceNumber(i);
 				roll.setDiceValue((dice.rollDice(numberOfSides)));
+				*/
 				
 				rollRepository.save(roll);
 				
 			}
 			
 			game = new Game();
+			/*
 			game.setPlayer_id(id);
 			game.setRoll_number(rollNumber);
-		
+			*/
+			
 			if(winnerNumbers.contains((rollRepository.valueRollDice(rollNumber))))
 				game.setWinner(true);
 			

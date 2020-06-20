@@ -6,102 +6,69 @@ package com.daus.Model;
  * 
  */
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "Roll") // Unnecessary line if same name
+@Table(name = "roll") // Unnecessary line if same name
 public class Roll {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
-	protected int rollNumber;
-	protected int diceNumber;
-	protected int diceValue;
-		
-	@ManyToMany
-	@JoinColumn(name = "id")
-	protected List<Player> players;
-	//protected Set<Player> players = new HashSet<>();
+	private Long roll_id;
+			
+	@OneToMany(targetEntity = Dice.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "roll_id")
+	private List<Dice> dice;
 	
 	public Roll() {}
 	
 	/**
-	 * @param rollNumber
-	 * @param diceNumber
-	 * @param diceValue
+	 * 
+	 * @param roll_id
+	 * @param dice
 	 */
-	public Roll(int rollNumber, int diceNumber, int diceValue) {
-		this.rollNumber = rollNumber;
-		this.diceNumber = diceNumber;
-		this.diceValue = diceValue;
+	public Roll(Long roll_id, List<Dice> dice) {
+		super();
+		this.roll_id = roll_id;
+		this.dice = dice;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getRoll_id() {
+		return roll_id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	public int getRollNumber() {
-		return rollNumber;
-	}
-
-	public void setRollNumber(int rollNumber) {
-		this.rollNumber = rollNumber;
-	}
-
-	public int getDiceNumber() {
-		return diceNumber;
-	}
-
-	public void setDiceNumber(int diceNumber) {
-		this.diceNumber = diceNumber;
-	}
-
-	public int getDiceValue() {
-		return diceValue;
-	}
-
-	public void setDiceValue(int diceValue) {
-		this.diceValue = diceValue;
+	public void setRoll_id(Long roll_id) {
+		this.roll_id = roll_id;
 	}
 
 	@JsonIgnore
-	//@ManyToMany(fetch = FetchType.LAZY, mappedBy = "players")
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "Player")
-	public List<Player> getPlayers() {
-		return players;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "dice")
+	public List<Dice> getDice() {
+		return dice;
 	}
 
-	public void setPlayers(List<Player> players) {
-		this.players = players;
+	public void setDice(List<Dice> dice) {
+		this.dice = dice;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + diceNumber;
-		result = prime * result + diceValue;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((players == null) ? 0 : players.hashCode());
-		result = prime * result + rollNumber;
+		result = prime * result + ((dice == null) ? 0 : dice.hashCode());
+		result = prime * result + ((roll_id == null) ? 0 : roll_id.hashCode());
 		return result;
 	}
 
@@ -114,29 +81,22 @@ public class Roll {
 		if (getClass() != obj.getClass())
 			return false;
 		Roll other = (Roll) obj;
-		if (diceNumber != other.diceNumber)
-			return false;
-		if (diceValue != other.diceValue)
-			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (dice == null) {
+			if (other.dice != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!dice.equals(other.dice))
 			return false;
-		if (players == null) {
-			if (other.players != null)
+		if (roll_id == null) {
+			if (other.roll_id != null)
 				return false;
-		} else if (!players.equals(other.players))
-			return false;
-		if (rollNumber != other.rollNumber)
+		} else if (!roll_id.equals(other.roll_id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Roll [id=" + id + ", rollNumber=" + rollNumber + ", diceNumber=" + diceNumber + ", diceValue="
-				+ diceValue + ", players=" + players + "]";
+		return "Roll [roll_id=" + roll_id + ", dice=" + dice + "]";
 	}
 	
 }

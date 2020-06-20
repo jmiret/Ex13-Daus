@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.daus.Configuration.ApplicationConfig;
-import com.daus.Domain.Dice;
 import com.daus.Exception.PlayerNotFoundException;
+import com.daus.Model.Dice;
 import com.daus.Model.Game;
 import com.daus.Model.Roll;
 import com.daus.Persistence.GameRepository;
@@ -59,18 +59,22 @@ public class GameService {
 				roll = new Roll();
 				dice = new Dice();
 				
-				roll.setRollNumber(rollNumber);
+				/*
+				roll.setRoll_id(rollNumber);
 				roll.setDiceNumber(i);
 				roll.setDiceValue((dice.rollDice(numberOfSides)));
+				*/
 				
 				rollRepository.save(roll);
 				
 			}
 			
 			game = new Game();
+			/*
 			game.setPlayer_id(id);
 			game.setRoll_number(rollNumber);
-		
+			*/
+			
 			if(winnerNumbers.contains((rollRepository.valueRollDice(rollNumber))))
 				game.setWinner(true);
 			

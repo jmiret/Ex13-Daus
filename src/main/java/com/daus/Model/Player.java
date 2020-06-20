@@ -7,74 +7,61 @@ package com.daus.Model;
  */
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "Player") // Unnecessary line if same name
+@Table(name = "player") // Unnecessary line if same name
 public class Player {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
-	protected String name;
+	private Long player_id;
+	private String name;
 	@JsonFormat(pattern = "YYYY-MM-dd")
-	protected Date dateReg;
+	private Date dateReg;
 	@Transient
-	protected double winnerAvg;
+	private double winnerAvg;
 		
-	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST}) 
-	@ManyToMany(cascade = { CascadeType.REMOVE })
-	@OnDelete(action = OnDeleteAction.CASCADE) //@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinTable(name = "Game",
-			joinColumns = { @JoinColumn(name = "player_id") },
-			inverseJoinColumns = { @JoinColumn(name = "roll_number") }
-	)
-	//protected Set<Roll> rolls = new HashSet<>();
-	protected Set<Roll> rolls;
+	@OneToMany
+	@JoinColumn(name = "player_id")
+	private List<Game> game;
 	
 	public Player() {}
 	
 	/**
 	 * 
-	 * @param id
+	 * @param player_id
 	 * @param name
 	 * @param dateReg
-	 * @param rolls
+	 * @param winnerAvg
+	 * @param game
 	 */
-	public Player(Long id, String name, Date dateReg, double winnerAvg, Set<Roll> rolls) {
+	public Player(Long player_id, String name, Date dateReg, double winnerAvg, List<Game> game) {
 		super();
-		this.id = id;
+		this.player_id = player_id;
 		this.name = name;
 		this.dateReg = dateReg;
 		this.winnerAvg = winnerAvg;
-		this.rolls = rolls;
+		this.game = game;
+	}
+	
+	public Long getPlayer_id() {
+		return player_id;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setPlayer_id(Long player_id) {
+		this.player_id = player_id;
 	}
 
 	public String getName() {
@@ -92,7 +79,7 @@ public class Player {
 	public void setDateReg(Date dateReg) {
 		this.dateReg = dateReg;
 	}
-	
+
 	public double getWinnerAvg() {
 		return winnerAvg;
 	}
@@ -101,21 +88,25 @@ public class Player {
 		this.winnerAvg = winnerAvg;
 	}
 
-	public Set<Roll> getRolls() {
-		return rolls;
+	public List<Game> getGame() {
+		return game;
 	}
 
-	public void setRolls(Set<Roll> rolls) {
-		this.rolls = rolls;
+	public void setGame(List<Game> game) {
+		this.game = game;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dateReg == null) ? 0 : dateReg.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((game == null) ? 0 : game.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((player_id == null) ? 0 : player_id.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(winnerAvg);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -133,22 +124,30 @@ public class Player {
 				return false;
 		} else if (!dateReg.equals(other.dateReg))
 			return false;
-		if (id == null) {
-			if (other.id != null)
+		if (game == null) {
+			if (other.game != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!game.equals(other.game))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (player_id == null) {
+			if (other.player_id != null)
+				return false;
+		} else if (!player_id.equals(other.player_id))
+			return false;
+		if (Double.doubleToLongBits(winnerAvg) != Double.doubleToLongBits(other.winnerAvg))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Player [id=" + id + ", name=" + name + ", dateReg=" + dateReg + "]";
+		return "Player [player_id=" + player_id + ", name=" + name + ", dateReg=" + dateReg + ", winnerAvg=" + winnerAvg
+				+ ", game=" + game + "]";
 	}
 	
 }
