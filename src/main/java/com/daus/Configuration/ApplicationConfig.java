@@ -1,12 +1,13 @@
 package com.daus.Configuration;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author jordi.miret
  * 
  */
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,6 @@ public class ApplicationConfig {
 	
 	public final static int numberOfDice = 2;
 	public final static int numberOfSides = 6;
-	public final static List<Integer> winnerNumbers = Arrays.asList(7);	
+	public final static List<Long> winnerNumbers = new ArrayList<Long>(7);	
 		
 }

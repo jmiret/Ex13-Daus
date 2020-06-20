@@ -1,7 +1,5 @@
 package com.daus.Model;
 
-import java.util.List;
-
 /**
  * 
  * @author jordi.miret
@@ -18,9 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "dice") // Unnecessary line if same name
@@ -83,6 +78,11 @@ public class Dice {
 
 	public void setRoll(Roll roll) {
 		this.roll = roll;
+	}
+	
+	public int rollDice(int sides) {
+		Random random = new Random();
+		return random.nextInt((sides - 1) + 1) + 1;		
 	}
 
 	@Override

@@ -19,7 +19,6 @@ import com.daus.Model.Player;
 public interface GameRepository extends JpaRepository<Game, Long> {
 	
 	@Query(value = "SELECT COUNT(DISTINCT id) from game", nativeQuery = true)
-	//@Query(value = "SELECT MAX(DISTINCT id) from game", nativeQuery = true)
 	Long getLastGame();
 		
 	@Query(value = "SELECT id FROM game WHERE player_id = :player_id", nativeQuery = true)

@@ -31,9 +31,12 @@ public class Game {
 	private boolean isWinner;
 	
 	@ManyToOne(targetEntity = Player.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_Player")	
+	@JoinColumn(name = "fk_player")	
 	private Player player;
 			
+	@OneToMany(mappedBy = "game")
+    private List<Roll> rolls;
+	
 	public Game() {}
 
 	/**

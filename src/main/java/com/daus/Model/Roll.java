@@ -32,6 +32,9 @@ public class Roll {
 	@ManyToOne(targetEntity = Game.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_game")	
 	private Game game;
+	
+	@OneToMany(mappedBy = "roll")
+    private List<Dice> dices;
 		
 	public Roll() {}
 

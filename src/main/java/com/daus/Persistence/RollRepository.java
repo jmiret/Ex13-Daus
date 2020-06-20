@@ -15,12 +15,9 @@ public interface RollRepository extends JpaRepository<Roll, Long> {
 	@Query(value = "SELECT COUNT(DISTINCT roll_number) from roll", nativeQuery = true)
 	int getLastRoll();
 	
-	@Query(value = "SELECT * FROM roll WHERE roll_number = :roll_number", nativeQuery = true)
-	List<Roll> getRollbyNumber(@Param("roll_number") int rollNumber);
-	
-	@Query(value = "SELECT SUM(dice_value) FROM roll WHERE roll_number = :roll_number", nativeQuery = true)
-	int valueRollDice(@Param("roll_number") int rollNumber);
-		
+	@Query(value = "SELECT * FROM roll WHERE id_roll = :id_roll", nativeQuery = true)
+	List<Roll> getRollByID(@Param("id_roll") Long id_roll);
+			
 	@Modifying
 	@Transactional
 	@Query(value = "DELETE FROM roll WHERE roll_number IN (?1)", nativeQuery = true)
