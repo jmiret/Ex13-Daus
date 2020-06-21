@@ -28,12 +28,14 @@ public class Roll {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_roll;
+	private boolean isWinner;
 	
-	@ManyToOne(targetEntity = Game.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_game")	
-	private Game game;
+	@ManyToOne(targetEntity = Player.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_player")	
+	private Player player;
 	
 	@OneToMany(mappedBy = "roll")
+	@JsonIgnore
     private List<Dice> dices;
 		
 	public Roll() {}
@@ -41,12 +43,16 @@ public class Roll {
 	/**
 	 * 
 	 * @param id_roll
-	 * @param game
-	 */
-	public Roll(Long id_roll, Game game) {
+	 * @param isWinner
+	 * @param player
+	 * @param dices
+	 */	
+	public Roll(Long id_roll, boolean isWinner, Player player, List<Dice> dices) {
 		super();
 		this.id_roll = id_roll;
-		this.game = game;
+		this.isWinner = isWinner;
+		this.player = player;
+		this.dices = dices;
 	}
 
 	public Long getId_roll() {
@@ -57,17 +63,33 @@ public class Roll {
 		this.id_roll = id_roll;
 	}
 
-	public Game getGame() {
-		return game;
+	public boolean isWinner() {
+		return isWinner;
 	}
 
-	public void setGame(Game game) {
-		this.game = game;
+	public void setWinner(boolean isWinner) {
+		this.isWinner = isWinner;
 	}
-	
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public List<Dice> getDices() {
+		return dices;
+	}
+
+	public void setDices(List<Dice> dices) {
+		this.dices = dices;
+	}
+
 	@Override
 	public String toString() {
-		return "Roll [id_roll=" + id_roll + ", game=" + game + "]";
+		return "Roll [id_roll=" + id_roll + ", isWinner=" + isWinner + ", player=" + player + ", dices=" + dices + "]";
 	}
 			
 }

@@ -1,6 +1,7 @@
 package com.daus.Configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -17,6 +18,6 @@ public class ApplicationConfig {
 	
 	public final static int numberOfDice = 2;
 	public final static int numberOfSides = 6;
-	public final static List<Long> winnerNumbers = new ArrayList<Long>(7);	
+	public final static List<Integer> winnerNumbers = Arrays.asList(5, 6); // Arrays.asList(5, 6) // Arrays.asList(7)
 		
 }

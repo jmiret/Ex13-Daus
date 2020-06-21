@@ -8,6 +8,7 @@ package com.daus.Controller;
 
 import java.sql.Wrapper;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,13 +19,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daus.Configuration.ApplicationConfig;
+import com.daus.Domain.Game;
 import com.daus.Exception.PlayerNotFoundException;
 import com.daus.Model.Dice;
-import com.daus.Model.Game;
 import com.daus.Model.Player;
 import com.daus.Model.Roll;
 import com.daus.Persistence.DiceRepository;
-import com.daus.Persistence.GameRepository;
 import com.daus.Persistence.PlayerRepository;
 import com.daus.Persistence.RollRepository;
 import com.daus.Service.GameService;
@@ -32,46 +32,40 @@ import com.daus.Service.GameService;
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class GameController {
-	
-	private final GameRepository gameRepository;
+
 	private final PlayerRepository playerRepository;
 	private final RollRepository rollRepository;
 	private final DiceRepository diceRepository;
 	
-	public GameController(GameRepository gameRepository, PlayerRepository playerRepository, RollRepository rollRepository, DiceRepository diceRepository) {
-		super();
-		this.gameRepository = gameRepository;
+	public GameController(PlayerRepository playerRepository, RollRepository rollRepository, DiceRepository diceRepository) {
+		super();		
 		this.playerRepository = playerRepository;
 		this.rollRepository = rollRepository;
 		this.diceRepository = diceRepository;
 	}
 	
 	@PostMapping("/players/{id}/games")
-	List<Roll> rollDice(@PathVariable Long id) {
+	List<Dice> rollDice(@PathVariable Long id) {
 				
 		int numberOfDice = ApplicationConfig.numberOfDice;
 		int numberOfSides = ApplicationConfig.numberOfSides;
-		List<Long> winnerNumbers = ApplicationConfig.winnerNumbers;
+		List<Integer> winnerNumbers = ApplicationConfig.winnerNumbers;
 		
 		if(!playerRepository.findById(id).equals(null)) {
-			Player player;
-			Game game;			
+			
+			Player player;	
 			Roll roll;
 			Dice dice;
 			Long id_roll;
 			
-			player = new Player();
-			player.setId_player(id);
-						
-			game = new Game();
-			game.getId_game();
-			game.setPlayer(player);
-												
-			roll = new Roll();
-			id_roll = roll.getId_roll();
-			//roll.setGame(game);
+			player = playerRepository.getOne(id);
+														
+			roll = new Roll();			
+			roll.setPlayer(player);
 			
 			rollRepository.save(roll);
+			
+			id_roll = roll.getId_roll();
 			
 			for(int i = 1; i <= numberOfDice; i++) {
 							
@@ -85,12 +79,12 @@ public class GameController {
 			}			
 			
 			if(winnerNumbers.contains((diceRepository.sumRollDice(id_roll))))
-				game.setWinner(true);
+				roll.setWinner(true);
 			
-			gameRepository.save(game);
+			rollRepository.save(roll);
 			
-			//return rollRepository.getRollByID(id_roll);
-			return null;
+			//return rollRepository.getRollById(id_roll);
+			return diceRepository.getDiceByRollId(id_roll);
 			
 		} else {
 			throw new PlayerNotFoundException(id);
@@ -99,23 +93,27 @@ public class GameController {
 	}
 	
 	@GetMapping("/players/{id}/games")
-	List<Game> getPlayerRoll(@PathVariable Long id) {
-		return gameRepository.findAll();				
+	List<Roll> getPlayerRoll(@PathVariable Long id) {
+		if(!playerRepository.findById(id).equals(null)) {
+			
+			//return playerRepository.getRollByPlayer(id);
+			//return rollRepository.getRollByPlayer(id);
+			return rollRepository.findAll();
+		
+		} else {
+			throw new PlayerNotFoundException(id);
+		}	
+				
 	}
 	
 	@DeleteMapping("/players/{id}/games")
 	void deletePlayerRoll(@PathVariable int id) {
-		List<Integer> ids;
-		ids = gameRepository.getPlayerGames(id);
-		rollRepository.deletePlayerRoll(ids);
-		System.out.println(ids.toString());
+		
 	}
 	
 	@GetMapping("/players__")
 	public List<Player> readAvgAllPlayers() {
-		//return playerRepository.findAll();
-		return gameRepository.getAvgAllPlayers();	
+		return playerRepository.getAvgAllPlayers();	
 	}	
-	
 	
 }

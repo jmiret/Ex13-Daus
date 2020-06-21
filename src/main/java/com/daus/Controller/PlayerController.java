@@ -62,9 +62,8 @@ public class PlayerController {
 		
 	@GetMapping("/players")
 	@ResponseBody
-	public List<Player> readAvgAllPlayers() {
-		return playerRepository.findAll();
-		//return playerRepository.getAvgAllPlayers();	
+	public List<Player> readAvgAllPlayers() {		
+		return playerRepository.getAvgAllPlayers();	
 	}	
 	
 	@GetMapping("/players_1")
