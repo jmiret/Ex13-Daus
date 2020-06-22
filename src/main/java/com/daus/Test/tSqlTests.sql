@@ -1,18 +1,26 @@
 USE dice;
 
-SELECT player.id, player.name, player.date_reg, AVG(game.is_winner) AS winnerAVG
-FROM game
-	INNER JOIN player
-		ON game.player_id = player.id
-GROUP BY player.name;
+SELECT id_player, name, date_reg, MIN(winner_avg) 
+			FROM (SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winner_avg
+					FROM player
+					INNER JOIN roll
+					ON player.id_player = roll.fk_player)
+					#Having id_player)
+		AS winner_min_avg;
 
-SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winnerAvg
-				FROM roll 
-					INNER JOIN player 
-						ON roll.fk_player = player.id_player 
-				GROUP BY player.name;
+SELECT id_player, name, date_reg, MAX(winner_avg) 
+			FROM (SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winner_avg
+					FROM player
+					INNER JOIN roll
+					ON player.id_player = roll.fk_player)
+					#HAVING winner_avg)
+		AS winner_max_avg GROUP BY id_player;
 
-SELECT * FROM player;
+SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winner_avg
+FROM player
+	INNER JOIN roll
+		ON player.id_player = roll.fk_player
+GROUP BY player.id_player;
 
 SELECT SUM(value) FROM dice WHERE fk_roll = 7;
 
@@ -22,10 +30,7 @@ SELECT COUNT(DISTINCT id_player) FROM player;
 
 SELECT player.id_player from player where name = "Arnau Es.";
 
-SELECT id_player, name, date_reg, MAX(winnerAvg) 
-			FROM (SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winnerAvg
-					FROM player
-					INNER JOIN roll
-					ON player.id_player = roll.fk_player
-					GROUP BY player.name)
-		AS winnerMaxAvg;
+SELECT * FROM player;
+
+        
+        

@@ -31,7 +31,7 @@ public class Player {
 	@JsonFormat(pattern = "YYYY-MM-dd")
 	private Date dateReg;
 	@Transient
-	private double winner_avg;
+	private double winner_avgs;
 	
 	@OneToMany(mappedBy = "player")
     @JsonIgnore
@@ -44,15 +44,14 @@ public class Player {
 	 * @param id_player
 	 * @param name
 	 * @param dateReg
-	 * @param winner_avg
-	 * @param rolls
+	 * @param winner_avgs
 	 */
-	public Player(Long id_player, String name, Date dateReg, double winner_avg, List<Roll> rolls) {
+	public Player(Long id_player, String name, Date dateReg, double winner_avgs, List<Roll> rolls) {
 		super();
 		this.id_player = id_player;
 		this.name = name;
 		this.dateReg = dateReg;
-		this.winner_avg = winner_avg;
+		this.winner_avgs = winner_avgs;
 		this.rolls = rolls;
 	}
 
@@ -81,11 +80,11 @@ public class Player {
 	}
 
 	public double getWinnerAvg() {
-		return winner_avg;
+		return winner_avgs;
 	}
 
-	public void setWinnerAvg(double winner_avg) {
-		this.winner_avg = winner_avg;
+	public void setWinnerAvg(double winner_avgs) {
+		this.winner_avgs = winner_avgs;
 	}
 
 	public List<Roll> getRolls() {
@@ -98,7 +97,7 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [id_player=" + id_player + ", name=" + name + ", dateReg=" + dateReg + ", winner_avg=" + winner_avg
+		return "Player [id_player=" + id_player + ", name=" + name + ", dateReg=" + dateReg + ", winner_avg=" + winner_avgs
 				+ ", rolls=" + rolls + "]";
 	}
 		
