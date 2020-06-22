@@ -18,10 +18,11 @@ public interface RollRepository extends JpaRepository<Roll, Long> {
 	
 	@Query(value = "SELECT * FROM roll WHERE fk_player = :id_player", nativeQuery = true)
 	List<Roll> getRollByPlayer(@Param("id_player") Long id_player);
-				
-	@Modifying
-	@Transactional
-	@Query(value = "DELETE FROM roll WHERE roll_number IN (?1)", nativeQuery = true)
-	void deletePlayerRoll(List<Integer> ids);
+	
+	@Query(value = "SELECT roll.id_roll FROM roll WHERE fk_player = :id_player", nativeQuery = true)
+	List<Long> getRollIdByPlayerId(@Param("id_player") Long id_player);
+	
+	@Query(value = "SELECT * FROM roll WHERE fk_player = :id_player", nativeQuery = true)
+	List<Roll> getRollByPlayerId(@Param("id_player") Long id_player);
 		
 }

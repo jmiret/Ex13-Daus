@@ -19,8 +19,9 @@ import com.daus.Model.Roll;
 
 public interface PlayerRepository extends JpaRepository<Player, Long> {
 	
-	@Query("SELECT p from Player p where p.name = :player_name")
-	Player findPlayerByName(@Param("player_name") String name);
+	//@Query("SELECT p from Player p where p.name = :player_name")
+	@Query(value = "SELECT player.id_player from player where name = ?1", nativeQuery = true)
+	Long findPlayerByName(@Param("name") String name);
 		
 	@Query(value = 	"SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winnerAvg " +
 					"FROM player " +
@@ -31,8 +32,6 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 	//Wrapper getAvgAllPlayers();
 	List<Player> getAvgAllPlayers();
 	
-	@Query(value = "SELECT * FROM roll WHERE fk_player = :id_player", nativeQuery = true)
-	List<Dice> getRollByPlayer(@Param("id_player") Long id_player);
 }
 
  

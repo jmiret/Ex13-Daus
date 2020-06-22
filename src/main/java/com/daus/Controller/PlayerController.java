@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.daus.Exception.CustomException;
 import com.daus.Exception.PlayerNotFoundException;
 import com.daus.Model.Player;
 import com.daus.Persistence.PlayerRepository;
@@ -44,11 +45,29 @@ public class PlayerController {
 		this.playerRepository = playerRepository;
 	}
 	
+	// http://localhost:8081/players (CREATE)
+	
 	@PostMapping("/players")
 	Player createPlayer(@RequestBody Player player) {
-		player.setDateReg(new Date());
-		return playerRepository.save(player);
+		
+		//if (playerRepository.findById(playerRepository.findPlayerByName(player.getName())) == null) {
+			player.setDateReg(new Date());
+			return playerRepository.save(player);
+		//} else { 
+		//	throw new CustomException("Player exists in database.");	
+		//}
+		
 	}
+	
+	// http://localhost:8081/players (READER)
+	
+		@GetMapping("/players")
+		@ResponseBody
+		public List<Player> readAvgAllPlayers() {		
+			return playerRepository.getAvgAllPlayers();	
+		}	
+	
+	// http://localhost:8081/players{id} (UPDATE)
 	
 	@PutMapping("/players/{id}")
 	Player updatePlayer(@RequestBody Player p, @PathVariable Long id) {
@@ -59,12 +78,8 @@ public class PlayerController {
 			return new PlayerNotFoundException(id);		
 		});
 	}
-		
-	@GetMapping("/players")
-	@ResponseBody
-	public List<Player> readAvgAllPlayers() {		
-		return playerRepository.getAvgAllPlayers();	
-	}	
+	
+	// http://localhost:8081/players_1 (READER)
 	
 	@GetMapping("/players_1")
 	@ResponseBody // The returned value will be converted to JSON	
@@ -78,6 +93,8 @@ public class PlayerController {
 		
 		return jdbcTemplate.queryForList(query);
 	}
+	
+	// http://localhost:8081/players_2 (READER)
 		
 	@GetMapping("/players_2")
 	@ResponseBody // The returned value will be converted to JSON

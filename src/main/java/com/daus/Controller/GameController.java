@@ -44,6 +44,8 @@ public class GameController {
 		this.diceRepository = diceRepository;
 	}
 	
+	// http://localhost:8081/players/1/games (CREATE)
+	
 	@PostMapping("/players/{id}/games")
 	List<Dice> rollDice(@PathVariable Long id) {
 				
@@ -83,7 +85,6 @@ public class GameController {
 			
 			rollRepository.save(roll);
 			
-			//return rollRepository.getRollById(id_roll);
 			return diceRepository.getDiceByRollId(id_roll);
 			
 		} else {
@@ -92,13 +93,14 @@ public class GameController {
 			
 	}
 	
+	// http://localhost:8081/players/1/games (READ)
+	
 	@GetMapping("/players/{id}/games")
 	List<Roll> getPlayerRoll(@PathVariable Long id) {
 		if(!playerRepository.findById(id).equals(null)) {
-			
-			//return playerRepository.getRollByPlayer(id);
-			//return rollRepository.getRollByPlayer(id);
-			return rollRepository.findAll();
+						
+			//return playerRepository.findAll();
+			return rollRepository.getRollByPlayerId(id);
 		
 		} else {
 			throw new PlayerNotFoundException(id);
@@ -106,8 +108,16 @@ public class GameController {
 				
 	}
 	
+	// http://localhost:8081/players/1/games (DELETE)
+	
 	@DeleteMapping("/players/{id}/games")
-	void deletePlayerRoll(@PathVariable int id) {
+	void deletePlayerRoll(@PathVariable Long id) {
+		
+		List<Long> ids;
+		
+		ids = rollRepository.getRollIdByPlayerId(id);
+		
+		diceRepository.deletePlayerRoll(ids);
 		
 	}
 	
