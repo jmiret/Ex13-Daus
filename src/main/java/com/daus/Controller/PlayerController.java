@@ -50,13 +50,13 @@ public class PlayerController {
 	@PostMapping("/players")
 	Player createPlayer(@RequestBody Player player) {
 		
-		//if (playerRepository.findById(playerRepository.findPlayerByName(player.getName())) == null) {
-			player.setDateReg(new Date());
-			return playerRepository.save(player);
-		//} else { 
-		//	throw new CustomException("Player exists in database.");	
-		//}
+		if (playerRepository.findPlayerByName(player.getName()) != null)
+			throw new CustomException("Player exists in database.");
 		
+		player.setDateReg(new Date());
+
+		return playerRepository.save(player);
+			
 	}
 	
 	// http://localhost:8081/players (READER)

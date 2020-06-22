@@ -32,6 +32,9 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 	//Wrapper getAvgAllPlayers();
 	List<Player> getAvgAllPlayers();
 	
+	@Query(value = "SELECT COUNT(DISTINCT id_player) FROM player", nativeQuery = true)
+	Long getLastId();
+	
 }
 
  
