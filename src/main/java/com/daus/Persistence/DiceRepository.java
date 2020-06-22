@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.daus.Model.Dice;
-import com.daus.Model.Roll;
 
 public interface DiceRepository extends JpaRepository<Dice, Long> {
 	

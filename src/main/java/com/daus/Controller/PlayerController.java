@@ -2,7 +2,6 @@ package com.daus.Controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Wrapper;
 
 /**
  * 
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +46,7 @@ public class PlayerController {
 	// http://localhost:8081/players (CREATE)
 	
 	@PostMapping("/players")
-	Player createPlayer(@RequestBody Player player) {
+	public Player createPlayer(@RequestBody Player player) {
 		
 		if (playerRepository.findPlayerByName(player.getName()) != null)
 			throw new CustomException("Player exists in database.");
@@ -61,22 +59,34 @@ public class PlayerController {
 	
 	// http://localhost:8081/players (READER)
 	
-		@GetMapping("/players")
-		@ResponseBody
-		public List<Player> readAvgAllPlayers() {		
-			return playerRepository.getAvgAllPlayers();	
-		}	
+	@GetMapping("/players")
+	@ResponseBody
+	public List<Player> readAvgAllPlayers() {		
+		return playerRepository.getAvgAllPlayers();	
+	}	
 	
 	// http://localhost:8081/players{id} (UPDATE)
 	
 	@PutMapping("/players/{id}")
-	Player updatePlayer(@RequestBody Player p, @PathVariable Long id) {
+	public Player updatePlayer(@RequestBody Player p, @PathVariable Long id) {
 		return playerRepository.findById(id).map(player -> {
 			player.setName(p.getName());
 			return playerRepository.save(player);
 		}).orElseThrow(() -> {
 			return new PlayerNotFoundException(id);		
 		});
+	}
+	
+	// http://localhost:8081/ranking/loser (READER)
+	@GetMapping("/players/ranking/loser")
+	public Player getLoser() {
+		return playerRepository.getLoser();
+	}
+	
+	// http://localhost:8081/ranking/winner (READER)
+	@GetMapping("/players/ranking/winner")
+	public Player getWinner() {
+		return playerRepository.getWinner();
 	}
 	
 	// http://localhost:8081/players_1 (READER)

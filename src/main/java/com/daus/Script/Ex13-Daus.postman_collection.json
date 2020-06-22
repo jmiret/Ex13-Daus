@@ -197,13 +197,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/ranking/winner",
+					"raw": "http://localhost:8081/players/ranking/winner",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
+						"players",
 						"ranking",
 						"winner"
 					]

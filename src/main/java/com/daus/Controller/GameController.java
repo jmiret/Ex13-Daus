@@ -6,9 +6,7 @@ package com.daus.Controller;
  *
  */
 
-import java.sql.Wrapper;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daus.Configuration.ApplicationConfig;
-import com.daus.Domain.Game;
 import com.daus.Exception.PlayerNotFoundException;
 import com.daus.Model.Dice;
 import com.daus.Model.Player;
@@ -27,7 +24,6 @@ import com.daus.Model.Roll;
 import com.daus.Persistence.DiceRepository;
 import com.daus.Persistence.PlayerRepository;
 import com.daus.Persistence.RollRepository;
-import com.daus.Service.GameService;
 
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})

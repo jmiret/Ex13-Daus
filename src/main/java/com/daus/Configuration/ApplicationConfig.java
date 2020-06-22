@@ -1,13 +1,12 @@
 package com.daus.Configuration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * 
  * @author jordi.miret
  * 
  */
+
+import java.util.Arrays;
 
 import java.util.List;
 

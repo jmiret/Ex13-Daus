@@ -17,3 +17,15 @@ SELECT * FROM player;
 SELECT SUM(value) FROM dice WHERE fk_roll = 7;
 
 SELECT * FROM roll WHERE fk_player = 1;
+
+SELECT COUNT(DISTINCT id_player) FROM player;
+
+SELECT player.id_player from player where name = "Arnau Es.";
+
+SELECT id_player, name, date_reg, MAX(winnerAvg) 
+			FROM (SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winnerAvg
+					FROM player
+					INNER JOIN roll
+					ON player.id_player = roll.fk_player
+					GROUP BY player.name)
+		AS winnerMaxAvg;
