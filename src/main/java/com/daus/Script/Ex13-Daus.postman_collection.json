@@ -4,6 +4,214 @@
 		"name": "Ex13-Daus",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
-	"item": [],
+	"item": [
+		{
+			"name": "createPlayer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"arnau.rodriguez\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"players"
+					]
+				},
+				"description": "http://localhost:8081/players"
+			},
+			"response": []
+		},
+		{
+			"name": "updatePlayer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Arnau Rodríguez\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/players/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"players",
+						"1"
+					]
+				},
+				"description": "http://localhost:8081/players/1"
+			},
+			"response": []
+		},
+		{
+			"name": "rollDice",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/players/1/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"players",
+						"1",
+						"games"
+					]
+				},
+				"description": "http://localhost:8081/players/1/games"
+			},
+			"response": []
+		},
+		{
+			"name": "deletePlayerRoll",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/players/1/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"players",
+						"1",
+						"games"
+					]
+				},
+				"description": "http://localhost:8081/players/1/games"
+			},
+			"response": []
+		},
+		{
+			"name": "playersAvarageList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/players",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"players"
+					]
+				},
+				"description": "http://localhost:8081/players"
+			},
+			"response": []
+		},
+		{
+			"name": "playerGamesList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/players/2/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"players",
+						"2",
+						"games"
+					]
+				},
+				"description": "http://localhost:8081/players/1/games"
+			},
+			"response": []
+		},
+		{
+			"name": "averageSuccessRate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/ranking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ranking"
+					]
+				},
+				"description": "http://localhost:8081/ranking"
+			},
+			"response": []
+		},
+		{
+			"name": "playerLoserSuccessRate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/ranking/loser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ranking",
+						"loser"
+					]
+				},
+				"description": "http://localhost:8081/ranking/loser"
+			},
+			"response": []
+		},
+		{
+			"name": "playerWinnerSuccessRate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/ranking/winner",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ranking",
+						"winner"
+					]
+				},
+				"description": "http://localhost:8081/ranking/winner"
+			},
+			"response": []
+		}
+	],
 	"protocolProfileBehavior": {}
 }
