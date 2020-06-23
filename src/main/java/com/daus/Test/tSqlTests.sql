@@ -1,5 +1,11 @@
 USE dice;
 
+## Percentatge MITG d'èxits
+SELECT AVG(roll.is_winner) AS winner_avg
+FROM player
+	INNER JOIN roll
+		ON player.id_player = roll.fk_player;
+
 ## Llistat jugadors amb percentatge MITG d'èxits i jugadors sense tirada
 SELECT id_player, name, date_reg, winner_avg 
 			FROM (SELECT player.id_player, player.name, player.date_reg, AVG(roll.is_winner) AS winner_avg

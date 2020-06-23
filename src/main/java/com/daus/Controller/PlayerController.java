@@ -1,8 +1,5 @@
 package com.daus.Controller;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  * 
  * @author jordi.miret
@@ -13,8 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;  
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +29,7 @@ import com.daus.Persistence.PlayerRepository;
 @RestController
 @CrossOrigin(origins = "*", methods= {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class PlayerController {
-	
-	private JdbcTemplate jdbcTemplate;
+
 	private final PlayerRepository playerRepository;
 
 	public PlayerController(PlayerRepository playerRepository) {
@@ -43,8 +38,7 @@ public class PlayerController {
 		this.playerRepository = playerRepository;
 	}
 	
-	// http://localhost:8081/players (CREATE)
-	
+	// http://localhost:8081/players (CREATE)	
 	@PostMapping("/players")
 	public Player createPlayer(@RequestBody Player player) {
 		
@@ -53,20 +47,20 @@ public class PlayerController {
 		
 		player.setDateReg(new Date());
 
-		return playerRepository.save(player);
-			
+		return playerRepository.save(player);			
 	}
 	
-	// http://localhost:8081/players (READER)
-	
+	// http://localhost:8081/players (READER)	
 	@GetMapping("/players")
 	@ResponseBody
-	public List<Player> readAvgAllPlayers() {		
-		return playerRepository.getAvgAllPlayers();	
+	public List<Map<String, Object>> getAvgAllPlayers(Model model) {
+		
+		List<Map<String, Object>> results = (List<Map<String, Object>>) playerRepository.getAvgAllPlayers();
+		model.addAttribute("results", results);
+		return results;	
 	}	
 	
-	// http://localhost:8081/players{id} (UPDATE)
-	
+	// http://localhost:8081/players{id} (UPDATE)	
 	@PutMapping("/players/{id}")
 	public Player updatePlayer(@RequestBody Player p, @PathVariable Long id) {
 		return playerRepository.findById(id).map(player -> {
@@ -79,59 +73,25 @@ public class PlayerController {
 	
 	// http://localhost:8081/ranking (READER)
 	@GetMapping("/players/ranking")
-	public Player getAvg() {
-		return playerRepository.getAvg();
+	public Map<String, Object> getAvg(Model model) {
+		Map<String, Object> results = (Map<String, Object>) playerRepository.getAvg();
+		model.addAttribute("results", results);
+		return results;
 	}
-	
+		
 	// http://localhost:8081/ranking/loser (READER)
 	@GetMapping("/players/ranking/loser")
-	public Player getLoser() {
-		//return playerRepository.getLoser();
-		return null;
+	public Map<String, Object> getLoser(Model model) {
+		Map<String, Object> results = (Map<String, Object>) playerRepository.getLoser();
+		model.addAttribute("results", results);
+		return results;
 	}
 	
 	// http://localhost:8081/ranking/winner (READER)
 	@GetMapping("/players/ranking/winner")
-	public Player getWinner() {
-		//return playerRepository.getWinner();
-		return null;
-	}
-	
-	// http://localhost:8081/players_1 (READER)
-	
-	@GetMapping("/players_1")
-	@ResponseBody // The returned value will be converted to JSON	
-	public List<Map<String, Object>> readAvgAllPlayers_1() {
-				
-		String query = "SELECT player.id, player.name, player.date_reg, AVG(game.is_winner) AS winnerAVG " + 
-				"FROM game " + 
-				"	INNER JOIN player " + 
-				"		ON game.player_id = player.id " + 
-				"GROUP BY player.name";
-		
-		return jdbcTemplate.queryForList(query);
-	}
-	
-	// http://localhost:8081/players_2 (READER)
-		
-	@GetMapping("/players_2")
-	@ResponseBody // The returned value will be converted to JSON
-	//@RequestMapping(value="/players", method = RequestMethod.GET)
-	public List<Player> readAvgAllPlayers_2() {
-				
-		List<Player> results = jdbcTemplate.query("SELECT p.name FROM Player p", new RowMapper<Player>() {
-
-			@Override
-			public Player mapRow(ResultSet rs, int rowNum) throws SQLException {
-				// TODO Auto-generated method stub
-				Player player = new Player();
-				player.setName(rs.getString("name"));
-				
-				return player;
-			}
-			
-		});
-		
+	public Map<String, Object> getWinner(Model model) {
+		Map<String, Object> results = (Map<String, Object>) playerRepository.getWinner();
+		model.addAttribute("results", results);
 		return results;
 	}
 	
