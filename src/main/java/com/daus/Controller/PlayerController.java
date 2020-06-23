@@ -77,16 +77,24 @@ public class PlayerController {
 		});
 	}
 	
+	// http://localhost:8081/ranking (READER)
+	@GetMapping("/players/ranking")
+	public Player getAvg() {
+		return playerRepository.getAvg();
+	}
+	
 	// http://localhost:8081/ranking/loser (READER)
 	@GetMapping("/players/ranking/loser")
 	public Player getLoser() {
-		return playerRepository.getLoser();
+		//return playerRepository.getLoser();
+		return null;
 	}
 	
 	// http://localhost:8081/ranking/winner (READER)
 	@GetMapping("/players/ranking/winner")
 	public Player getWinner() {
-		return playerRepository.getWinner();
+		//return playerRepository.getWinner();
+		return null;
 	}
 	
 	// http://localhost:8081/players_1 (READER)
