@@ -8,10 +8,12 @@ package com.daus.Exception;
 
 public class PlayerNotFoundException extends RuntimeException {
 
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6456379856928124597L;
+	private static final long serialVersionUID = 3656045561262849718L;
 
 	public PlayerNotFoundException(Long id) {
 		super("Could not find player " + id);

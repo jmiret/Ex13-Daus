@@ -30,6 +30,7 @@ public class Roll {
 	private boolean isWinner;
 	
 	@ManyToOne(targetEntity = Player.class, fetch = FetchType.LAZY)
+	//@ManyToOne(targetEntity = Player.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_player")	
 	private Player player;
 	

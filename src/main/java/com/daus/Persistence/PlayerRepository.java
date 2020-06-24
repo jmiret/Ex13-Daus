@@ -16,6 +16,9 @@ import com.daus.Model.Player;
 
 public interface PlayerRepository extends JpaRepository<Player, Long> {
 
+	@Query(value = "SELECT player.id_player from player where id_player = ?1", nativeQuery = true)
+	Long findPlayerById(@Param("id_player") Long id_player);
+	
 	@Query(value = "SELECT player.id_player from player where name = ?1", nativeQuery = true)
 	Long findPlayerByName(@Param("name") String name);
 	
@@ -49,7 +52,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 			"FROM player " +
 			"INNER JOIN roll " +
 			"ON player.id_player = roll.fk_player " +
-			"GROUP BY player.name" +
+			"GROUP BY player.name" +			
 			"", nativeQuery = true)
 	List<Map<String, Object>> getAvgAllPlayers();
 	

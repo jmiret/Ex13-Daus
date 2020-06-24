@@ -66,6 +66,9 @@
 		},
 		{
 			"name": "rollDice",
+			"protocolProfileBehavior": {
+				"disableCookies": true
+			},
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -134,7 +137,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/players/2/games",
+					"raw": "http://localhost:8081/players/1/games",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -142,7 +145,7 @@
 					"port": "8081",
 					"path": [
 						"players",
-						"2",
+						"1",
 						"games"
 					]
 				},
@@ -156,13 +159,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/ranking",
+					"raw": "http://localhost:8081/players/ranking",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
+						"players",
 						"ranking"
 					]
 				},
@@ -176,13 +180,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/ranking/loser",
+					"raw": "http://localhost:8081/players/ranking/loser",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
+						"players",
 						"ranking",
 						"loser"
 					]

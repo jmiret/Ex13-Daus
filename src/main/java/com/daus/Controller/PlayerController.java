@@ -63,6 +63,7 @@ public class PlayerController {
 	// http://localhost:8081/players{id} (UPDATE)	
 	@PutMapping("/players/{id}")
 	public Player updatePlayer(@RequestBody Player p, @PathVariable Long id) {
+		//return playerRepository.findById(id).map(player -> {
 		return playerRepository.findById(id).map(player -> {
 			player.setName(p.getName());
 			return playerRepository.save(player);

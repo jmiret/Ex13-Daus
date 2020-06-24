@@ -48,63 +48,61 @@ public class GameController {
 		int numberOfSides = ApplicationConfig.numberOfSides;
 		List<Integer> winnerNumbers = ApplicationConfig.winnerNumbers;
 		
-		if(!playerRepository.findById(id).equals(null)) {
-			
-			Player player;	
-			Roll roll;
-			Dice dice;
-			Long id_roll;
-			
-			player = playerRepository.getOne(id);
-														
-			roll = new Roll();			
-			roll.setPlayer(player);
-			
-			rollRepository.save(roll);
-			
-			id_roll = roll.getId_roll();
-			
-			for(int i = 1; i <= numberOfDice; i++) {
-							
-				dice = new Dice();				
-				dice.setSide(i);
-				dice.setValue(dice.rollDice(numberOfSides));
-				dice.setRoll(roll);
-				
-				diceRepository.save(dice);
-				
-			}			
-			
-			if(winnerNumbers.contains((diceRepository.sumRollDice(id_roll))))
-				roll.setWinner(true);
-			
-			rollRepository.save(roll);
-			
-			return diceRepository.getDiceByRollId(id_roll);
-			
-		} else {
+		if(!playerRepository.findById(id).isPresent())
 			throw new PlayerNotFoundException(id);
-		}
+		
+		Player player;	
+		Roll roll;
+		Dice dice;
+		Long id_roll;
+		
+		player = playerRepository.getOne(id);
+													
+		roll = new Roll();			
+		roll.setPlayer(player);
+		
+		rollRepository.save(roll);
+		
+		id_roll = roll.getId_roll();
+		
+		for(int i = 1; i <= numberOfDice; i++) {
+						
+			dice = new Dice();				
+			dice.setSide(i);
+			dice.setValue(dice.rollDice(numberOfSides));
+			dice.setRoll(roll);
 			
+			diceRepository.save(dice);
+			
+		}			
+		
+		if(winnerNumbers.contains((diceRepository.sumRollDice(id_roll))))
+			roll.setWinner(true);
+		
+		rollRepository.save(roll);
+		
+		return diceRepository.getDiceByRollId(id_roll);
+		
+		
 	}
 	
 	// http://localhost:8081/players/1/games (READ)	
 	@GetMapping("/players/{id}/games")
 	List<Roll> getPlayerRoll(@PathVariable Long id) {
-		if(!playerRepository.findById(id).equals(null)) {
-						
-			//return playerRepository.findAll();
-			return rollRepository.getRollByPlayerId(id);
-		
-		} else {
+
+		if(!playerRepository.findById(id).isPresent())
 			throw new PlayerNotFoundException(id);
-		}	
+						
+			return rollRepository.getRollByPlayerId(id);
 				
 	}
 	
 	// http://localhost:8081/players/1/games (DELETE)	
 	@DeleteMapping("/players/{id}/games")
 	void deletePlayerRoll(@PathVariable Long id) {
+		
+		if(!playerRepository.findById(id).isPresent())
+			throw new PlayerNotFoundException(id);
 		
 		List<Long> ids;
 		
