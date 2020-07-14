@@ -1,1 +1,4 @@
-CREATE SCHEMA `dice`;
+DROP SCHEMA IF EXISTS `dice`;
+CREATE SCHEMA IF NOT EXISTS `dice`;
+
+USE `dice`;	
