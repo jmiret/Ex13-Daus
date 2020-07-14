@@ -52,7 +52,7 @@ public class PlayerController {
 	
 	// http://localhost:8081/players (READER)	
 	@GetMapping("/players")
-	@ResponseBody
+	@ResponseBody	
 	public List<Map<String, Object>> getAvgAllPlayers(Model model) {
 		
 		List<Map<String, Object>> results = (List<Map<String, Object>>) playerRepository.getAvgAllPlayers();
@@ -79,21 +79,41 @@ public class PlayerController {
 		model.addAttribute("results", results);
 		return results;
 	}
-		
+	
+	/*
 	// http://localhost:8081/ranking/loser (READER)
 	@GetMapping("/players/ranking/loser")
-	public Map<String, Object> getLoser(Model model) {
-		Map<String, Object> results = (Map<String, Object>) playerRepository.getLoser();
-		model.addAttribute("results", results);
-		return results;
+	public String getLoser() throws JsonProcessingException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.readTree(playerRepository.getLoser());
+		
+		String resultsJSON = mapper.writeValueAsString(mapper);
+		
+		return resultsJSON;
 	}
+	*/
 	
+	// http://localhost:8081/ranking/loser (READER)
+		@GetMapping("/players/ranking/loser")
+		public Map<String, Object> getLoser() {
+			Map<String, Object> results = (Map<String, Object>) playerRepository.getLoser();
+			return results;
+		}
+		
 	// http://localhost:8081/ranking/winner (READER)
-	@GetMapping("/players/ranking/winner")
-	public Map<String, Object> getWinner(Model model) {
+		@GetMapping("/players/ranking/winner")
+		public Map<String, Object> getWinner() {
+			Map<String, Object> results = (Map<String, Object>) playerRepository.getWinner();
+			return results;
+		}
+	
+	// http://localhost:8081/ranking/winner_1 (READER)
+	@GetMapping("/players/ranking/winner_1")
+	public Map<String, Object> getWinner_1(Model model) {
 		Map<String, Object> results = (Map<String, Object>) playerRepository.getWinner();
 		model.addAttribute("results", results);
 		return results;
 	}
-	
+		
 }

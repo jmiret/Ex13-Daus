@@ -19,18 +19,28 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Entity
 @Table(name = "player") // Unnecessary line if same name
+@JsonPropertyOrder({ "id_player", "player_name", "data_reg", "winner_avg"})
 public class Player {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id_player")
 	private Long id_player;
+	
+	@JsonProperty("player_name")
 	private String name;
+	
 	@JsonFormat(pattern = "YYYY-MM-dd")
+	@JsonProperty("date_reg")
 	private Date dateReg;
+	
 	@Transient
+	@JsonProperty("winner_avg")
 	private double winner_avg;
 	
 	@OneToMany(mappedBy = "player")
@@ -79,11 +89,11 @@ public class Player {
 		this.dateReg = dateReg;
 	}
 
-	public double getWinnerAvg() {
+	public double getWinner_avg() {
 		return winner_avg;
 	}
 
-	public void setWinnerAvg(double winner_avg) {
+	public void setWinner_avg(double winner_avg) {
 		this.winner_avg = winner_avg;
 	}
 
