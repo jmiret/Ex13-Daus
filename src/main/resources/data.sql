@@ -1,6 +1,6 @@
 USE dice;
 
-INSERT INTO Player (name, date_reg) VALUES ("Arnau E.", NOW());
-INSERT INTO Player (name, date_reg) VALUES ("José A.", NOW());
-INSERT INTO Player (name, date_reg) VALUES ("David M.", NOW());
-INSERT INTO Player (name, date_reg) VALUES ("Daniel S.", NOW());
+INSERT INTO player (name, date_reg) VALUES ("Arnau E.", NOW());
+INSERT INTO player (name, date_reg) VALUES ("José A.", NOW());
+INSERT INTO player (name, date_reg) VALUES ("David M.", NOW());
+INSERT INTO player (name, date_reg) VALUES ("Daniel S.", NOW());
